@@ -1,0 +1,37 @@
+- if @proposals.any? || policy(Proposal.new(artist: @user)).create?
+  .row
+    .col.s12.profile-section-nav
+      .card.title-card.z-depth-05
+        .card-content
+          .flex-align
+            %h4.ellipsis.hide-on-med-and-down= raw t(".title", { user_name: h(@user.name) })
+            %h4.ellipsis.hide-on-large-only= raw t(".title_short")
+            - if policy(Proposal.new(artist: @user)).create?
+              .hide-on-med-and-down
+                = link_to new_artist_proposal_path(artist_id: @user.slug), class: 'btn  z-depth-0 btn-large' do
+                  %i.material-icons.left add
+                  = t(".add")
+              .hide-on-large-only
+                = link_to new_artist_proposal_path(artist_id: @user.slug), class: 'btn-floating  z-depth-0 btn-large' do
+                  %i.material-icons.left add
+
+    - if @proposals.any?
+      .sortable-cards{data: { sortable: { "enabled" => policy(Profile.new(user: @user)).update?.to_s, "update-path" => user_profile_path(@user), "object" => "profile", "field" => "proposals_order", "success-message" =>  t(".proposals_order_updated") } } }
+        = render partial: "artists/proposals/proposal", collection: @proposals
+        = render partial: "shared/card_filler", locals: { count: @proposals.count, height: 556 }
+
+    - elsif policy(Proposal.new(artist: @user)).create?
+      .col.s12
+        .card.notice-card
+          .card-content
+            .flow-text
+              %p
+                <strong>A proposal is any kind of artistic service you can and want to provide to your customers.</strong>
+                Each proposal has its own description, sample pictures, terms of service, price and average delay.
+
+              %p
+                You can also activate or deactivate each proposal so that your customers are aware you just opened, or closed, for this particular type of service.
+
+              %p
+                <strong>There's no need to put everything you can do in a single proposal!</strong>
+                You can even duplicate your proposals so that it's even easier for you to write new proposals without rewriting general stuff all over again.

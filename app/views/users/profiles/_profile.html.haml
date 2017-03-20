@@ -1,0 +1,50 @@
+.wide-banner.z-depth-1.white.profile-actions.hide-on-med-and-down
+  .container
+    .row.row-no-bottom-margin
+      .col.s12.hide-on-med-and-down
+        .flex-align
+          %div
+            = render partial: 'users/profiles/actions', locals: { user: user, is_owner: is_owner }
+          = render partial: "users/profiles/watches", locals: { user: user, is_owner: is_owner }
+
+.container
+  .row
+    .col.s12
+      .card.profile.z-depth-05{itemscope: true, itemtype: "http://schema.org/Person", itemid: profile_url(@user)}
+        .card-content
+          .row.row-no-bottom-margin
+            .col.s3.m2.center-align
+              = render partial: "shared/avatar", locals: { user: user, with_status: true }
+            .col.s9.m10
+              .flex-align.profile-bar
+                %div
+                  %h4.ellipsis
+                    %strong{itemprop: "name"}= user.name
+              - if user.is_deleted?
+                %p
+                  %em= t('.deleted_user')
+              - else
+                - if user.profile.biography.present?
+                  %div{itemprop: "description"}= format_text(user.profile.biography)
+                  %br
+                - else
+                  %p
+                    %em= t('.no_biography')
+
+        .card-action.hide-on-large-only
+          = render partial: "users/profiles/watches", locals: { user: @user, is_owner: current_user == @user }
+
+        - if !user.is_deleted? && user.profile.sites.present?
+          .card-action
+            .sites
+              - user.profile.sites.each do |site, username|
+                - if username.present?
+                  = link_to t("sites.url.#{site}", username: u(username)), class: 'site-link blue-text text-darken-1', target: '_blank', rel: 'noopener', itemprop: "affiliation", itemtype: "http://schema.org/Organisation", itemid: t("sites.url.#{site}", username: u(username)) do
+                    = t("sites.#{site}")
+                    - if user.profile.certified_sites.include? site
+                      %i.material-icons verified_user
+
+#watchers-modal.modal.bottom-sheet
+  .modal-content
+#watching-modal.modal.bottom-sheet
+  .modal-content

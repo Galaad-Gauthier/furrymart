@@ -1,0 +1,70 @@
+- if user_signed_in?
+  %li.hide-on-large-only
+    .userView
+      %img.background{src: image_url("gplaypattern.png")}
+      = link_to profile_path(user_id: current_user.slug) do
+        %img.circle{src: current_user.profile.avatar_url(:avatar)}
+      = link_to profile_path(user_id: current_user.slug), class: 'name' do
+        = current_user.name
+      = link_to profile_path(user_id: current_user.slug), class: 'email' do
+        = current_user.email
+
+  %li{:class => "#{is_active_link?(notifications_path) && 'active'} #{notifications.none? && 'disabled'} hide-on-large-only"}
+    = link_to notifications_path, class: "notifications-link" do
+      - if unread_notifications.any?
+        = t('.unread_notifications', { count: unread_notifications.count })
+        %i.material-icons.right notifications
+      - else
+        = t('.no_notification')
+        %i.material-icons.right notifications_none
+  %li.hide-on-large-only
+    .divider
+
+  %li{:class => "#{(is_active_link?(proposals_path) || is_active_link?(root_path, :exact)) && 'active'}"}
+    = link_to t('.proposals'), root_path
+
+  %li{:class => "#{is_active_link?(commissioner_quotations_path(commissioner_id: current_user.slug)) && 'active'}  #{quotations_as_commissioner.none? && 'disabled'}"}
+    = link_to t('.my_quotations_as_commissioner'), commissioner_quotations_path(commissioner_id: current_user.slug)
+
+  %li{:class => "#{is_active_link?(artist_quotations_path(artist_id: current_user.slug)) && 'active'} #{quotations_as_artist.none? && 'disabled'}"}
+    = link_to t('.my_quotations_as_artist'), artist_quotations_path(artist_id: current_user.slug)
+
+  %li{:class => is_active_link?(user_assets_path(user_id: current_user.slug)) && 'active'}
+    = link_to t('.gallery'), user_assets_path(user_id: current_user.slug)
+
+  %li{:class => "#{is_active_link?(messages_path) && 'active'} #{my_messages.none? && 'disabled'}"}
+    = link_to messages_path do
+      = t('.my_messages')
+      - if unread_messages.count > 0
+        %span.message-count.blue= unread_messages.count
+
+  %li{:class => "#{is_active_link?(notifications_path) && 'active'} hide-on-med-and-down notifications"}
+    = link_to notifications_path, class: "notifications-link" do
+      - if unread_notifications.any?
+        %i.material-icons notifications
+        %span.notification-count= unread_notifications.count
+      - else
+        %i.material-icons notifications_none
+        %span.notification-count
+
+  %li{:class => "hide-on-med-and-down #{is_on_profile? && 'active'}"}
+    = link_to profile_path(user_id: current_user.slug) do
+      = render partial: "shared/avatar", locals: { user: current_user }
+
+  %li.hide-on-large-only
+    .divider
+  - ['terms-of-service', 'acceptable-content-policy', 'about'].each do |page|
+    %li.hide-on-large-only
+      = link_to t("pages.titles.#{page}"), page_path(page)
+  %li.hide-on-large-only
+    = link_to t('.sign_out'), destroy_user_session_path, :method => :delete
+
+- else
+  %li{:class => "#{is_active_link?(proposals_path) && 'active'}"}
+    = link_to t('.proposals'), proposals_path
+
+  %li{:class => "#{is_active_link?(new_user_registration_path) && 'active'}"}
+    = link_to t('.sign_up'), new_user_registration_path
+
+  %li{:class => "#{is_active_link?(new_user_session_path) && 'active'}"}
+    = link_to t('.sign_in'), new_user_session_path

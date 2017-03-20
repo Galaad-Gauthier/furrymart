@@ -1,0 +1,131 @@
+en:
+  layouts:
+    mailer:
+      edit_user_profile: Too many emails? Edit your preferences here.
+  notification_mailer:
+    invoice_paid:
+      title: '%{commissioner_name} marked an invoice as paid.'
+      infos:
+        Before you mark the order as paid on the order page, please make sure you received the right amount of money from the commissioner.
+      show_quotation: See the order
+
+    invoice_cancelled_paid:
+      title: '%{commissioner_name} marked an invoice as not paid.'
+      infos:
+        Oh, that's unusual, the commissioner marked your invoice back as not paid. No worries it's not a refund, but you should ask
+        them if there was a problem with payment.
+      show_quotation: See the order
+
+    follow:
+      title: '%{follower_name} is now watching you.'
+      body: 'You are now watched by <a href="%{follower_link}">%{follower_name}</a>.'
+      infos:
+        You have a new watcher! This user will now get notified when you create new commission proposals. How awesome is that?
+      show_user: See %{follower_name}'s page
+
+    message_created:
+      title: '%{sender_name} sent a private message.'
+      see_conversation: See conversation
+
+    question_created:
+      title: '%{sender_name} asked you a question.'
+      show_question: Answer the question
+
+    question_answered:
+      title: '%{recipient_name} answered your question.'
+      see_answer: See the anwser
+
+    proposal_created:
+      title: '%{artist_name} has created a new commission proposal "%{proposal_title}".'
+      infos:
+        "We notify you because you are watching this artist and you wanted to get notified when commissions open."
+      show_proposal: See the commission proposal
+
+    proposal_opened:
+      title: '%{artist_name} has opened commissions for "%{proposal_title}".'
+      infos:
+        "We notify you because this commission proposal was in your wishlist or because you watch this artist."
+      show_proposal: See the commission proposal
+
+    quotation_created:
+      title: You have a new commission request.
+      body:
+        Request by <a href="%{commissioner_link}">%{commissioner_name}</a> for your proposal <a href="%{proposal_link}">%{proposal_title}</a>:<br />
+      show_quotation: See the request
+      infos:
+        As an artist or builder you are free to either accept or refuse this order. If you don't want to receive more orders for
+        this commission proposal you should deactivate it on your <a href="%{artist_profile_page}">profile page</a>.
+
+    custom_quotation_created:
+      title: You have a new quote request.
+      body:
+        Request by <a href="%{commissioner_link}">%{commissioner_name}</a>:<br />
+      show_quotation: See the request
+
+    quotation_accepted:
+      title: '%{artist_name} accepted your order.'
+      body: '<strong>%{proposal_title}</strong> by <a href="%{artist_link}">%{artist_name}</a>.'
+      infos:
+        Good news! Your order was accepted by the artist. Now you can sit comfortably and
+        wait for the next steps, usually the artist will ask you for payment or for
+        additional informations.
+      show_quotation: See your order
+
+    quotation_cancelled:
+      title: '%{artist_name} has put your commission request back in waiting list.'
+      infos:
+        "Oh, that's unusual, the artist or builder put your request back in their waiting list. No worries, there's probably a good reason for it!"
+      show_quotation: See your order
+
+    quotation_paid:
+      title: '%{artist_name} has marked your order has paid.'
+      infos:
+        Great! The artist marked your order as paid. Now all you have to do is wait for additional questions, WIPs and of
+        course the final piece. No worries, we'll notify you!
+      show_quotation: See your order
+
+    quotation_done:
+      title: '%{artist_name} has finished your commission.'
+      infos:
+        Great news today, your commission is done! Thank you for ordering your commission on FurryMart, don't forget to rate your relation with the artist.
+      show_quotation: See your commission
+
+    quotation_refused:
+      title: '%{artist_name} declined your commission request.'
+      infos_with_reason: "Sorry, you request was declined for the following reason: <strong>%{reason}</strong>."
+      infos:
+        "Sadly the artist or builder declined your request :("
+      show_quotation: See your request
+
+    quotation_remind_waiting_approval:
+      title: You still have a commission request waiting for your approval.
+      body:
+        Request by <a href="%{commissioner_link}">%{commissioner_name}</a> for your proposal <a href="%{proposal_link}">%{proposal_title}</a>:<br />
+      infos:
+        As an artist or builder you are free to either accept or refuse this order. If you don't want to receive more orders for
+        this commission proposal you should deactivate it on your <a href="%{artist_profile_page}">profile page</a>.
+      show_quotation: See the request
+
+    commissioner_quotation_comment_created:
+      title: '%{commissioner_name} posted a comment on one of their orders.'
+      body:
+        Comment by <a href="%{commissioner_link}">%{commissioner_name}</a> for the order <a href="%{quotation_link}">%{proposal_title}</a>:<br />
+      show_quotation: See the order
+      attachment: Attachment
+
+    artist_quotation_comment_created:
+      title: '%{artist_name} posted a comment on your order.'
+      body:
+        Comment by <a href="%{artist_link}">%{artist_name}</a> for the order <a href="%{quotation_link}">%{proposal_title}</a>:<br />
+      show_quotation: See your order
+      attachment: Attachment
+
+  information_mailer:
+    welcome:
+      title: 'Welcome on Furry·Mart, %{username}!'
+      body: |
+            We are super happy and proud to count you as one of our members!<br /><br />
+
+            You can now <a href="%{profile_link}">edit your profile</a>, create proposals, start taking commissions through Furry·Mart or add your characters and <a href="%{proposals_link}">look for cool available artists</a>. <br /><br />
+
+            The Furry·Mart team <3

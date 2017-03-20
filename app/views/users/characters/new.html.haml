@@ -1,0 +1,11 @@
+.container
+  .row
+    .col.s12.l10.offset-l1
+      = form_for(@character, url: [current_user, :characters]) do |f|
+        .card.page-card
+          .card-content
+            %h4.top
+              %strong= t(".title")
+            = render partial: 'users/characters/form', locals: { f: f, proposal: @character }
+          .card-action.right-align
+            = f.button t('.submit'), class: 'btn z-depth-0 waves-effect waves-light'

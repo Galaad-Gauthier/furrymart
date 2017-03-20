@@ -1,0 +1,43 @@
+aws_url = '<%= ENV["DIRECT_UPLOAD_S3_URL"] %>'
+bucket = '<%= ENV["DIRECT_UPLOAD_S3_BUCKET"] %>'
+
+evaporate = new Evaporate
+  awsSignatureVersion: '2'
+  signerUrl: '/s3/sign'
+  aws_key: '<%= ENV["DIRECT_UPLOAD_AWS_ACCESS_KEY_ID"] %>'
+  aws_url: aws_url
+  bucket: bucket
+
+$(document).on 'turbolinks:load', ->
+  $("*[data-attachment-upload]").each (i, _elem) ->
+    elem = $(_elem)
+    form = elem.parents("form")
+    wrapper = form.find(".attachment-upload")
+    submit = elem.parents("form").find("button[type=submit]")
+
+    elem.change (event) ->
+      files = event.target.files;
+
+      upload = (file) ->
+        extension = file.name.split('.').pop()
+        evaporate.add
+          name: "#{elem.data('owner')}/#{Math.floor(Date.now())}.#{extension}"
+          file: file
+          complete: (_xhr, path) ->
+            fileUrl = aws_url + '/' + bucket + '/' + path
+            form.find("input[type='file']").val('')
+
+            chip = $("<div>").addClass("chip").text(file.name)
+            chipClose = $("<i>").addClass("close material-icons").text("close")
+            chipUrlField = $("<input>").prop('type', 'hidden').prop('name', 'quotation_comment[attachments_attributes][][file_url]').val(fileUrl)
+            chipNameField = $("<input>").prop('type', 'hidden').prop('name', 'quotation_comment[attachments_attributes][][original_filename]').val(file.name)
+            form.find(".files-to-upload").append(chip.append(chipClose).append(chipUrlField).append(chipNameField))
+
+      promises = []
+      promises.push(upload(file)) for file in files
+
+      wrapper.addClass("uploading")
+      submit.prop('disabled', true)
+      Promise.all(promises).then ->
+        wrapper.removeClass("uploading")
+        submit.prop('disabled', false)

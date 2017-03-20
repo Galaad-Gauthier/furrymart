@@ -1,0 +1,9 @@
+%a.collection-item.avatar{href: quotation_path(activity.trackable)}
+  = render partial: "shared/avatar", locals: { user: activity.owner }
+  %span.title= raw t('.title', { commissioner_name: h(activity.owner.name) })
+  - if activity.trackable.proposal.present?
+    %p= activity.trackable.proposal.title
+  %p.date= t("public_activity.shared.ago", { time: time_ago_in_words(activity.created_at) })
+  - if !current_user.have_read?(activity)
+    %span.secondary-content
+      %i.material-icons new_releases

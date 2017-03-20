@@ -1,0 +1,4 @@
+.mui--text-body1
+  = t(".infos")
+.mui--text-center.mui-link
+  %a.mui-btn.mui-btn--primary{:href => "#{profile_url(user_id: @follower.id)}", :target => "_blank"}= t('.show_user', { follower_name: @follower.name })

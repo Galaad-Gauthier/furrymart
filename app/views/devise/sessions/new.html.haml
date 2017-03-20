@@ -1,0 +1,33 @@
+.container.full-height
+  .row.valign-wrapper.full-height
+    .col.s12.m12.l6.offset-l3.valign
+      = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        .card.z-depth-05
+          .card-content
+            = f.hidden_field :remember_me, value: true
+
+            - if has_twitter_signin?
+              .row
+                .col.s12.center-align
+                  = link_to user_twitter_omniauth_authorize_path, class: "btn btn-large twitter-signin z-depth-0" do
+                    = t('.sign_in_with_twitter')
+                    = image_tag "twitter_logo.png"
+
+              %hr.or
+
+            .row
+              .col.s12
+                .input-field
+                  = f.label :email, t('.email')
+                  = f.email_field :email, autofocus: true
+
+              .col.s12
+                .input-field
+                  = f.label :password, t('.password')
+                  = f.password_field :password, autocomplete: "off"
+
+          .card-action.flex-align
+            = link_to t('.sign_up'), new_registration_path(resource_name), class: 'black-text'
+            = f.button t('.submit'), class: 'btn waves-effect waves-light z-depth-0'
+          #forgot-password.center-align
+            = link_to t('.forgot_your_password'), new_password_path(resource_name)

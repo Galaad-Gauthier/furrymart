@@ -1,0 +1,7 @@
+.card-action.flex-align
+  .visibility-switch{ data: { 'proposal-id' => proposal.slug, 'checked-message': t('.open_feedback'), 'unchecked-message': t('.close_feedback') }}
+    %input.filled-in{type: "checkbox", id: "proposal-visibility-#{proposal.id}", checked: proposal.visible}
+    %label{for: "proposal-visibility-#{proposal.id}"}= t(".open_for_commission")
+  .div
+    = link_to t(".duplicate"), artist_proposal_duplicate_path(artist_id: proposal.artist.slug, proposal_id: proposal.slug), class: 'blue-text'
+    = link_to t('.edit'), edit_artist_proposal_path(artist_id: proposal.artist.slug, id: proposal.slug), class: 'blue-text'

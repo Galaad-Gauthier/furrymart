@@ -1,0 +1,79 @@
+.row
+  .col.s12
+    = error_messages_for(f.object)
+    %h4
+      = t(".pricing")
+
+  .col.s12.m12.l6
+    .input-field
+      = f.label :price, t('.price')
+      = f.text_field :price, required: true, type: "number", min: "0", step: "1", autofocus: true
+
+  .col.s12.m12.l6
+    #proposal_currency_uid_select_wrapper.input-field
+      = f.collection_select :currency_uid, Currency.all, :uid, :name, value: f.object.currency_uid, selected: (f.object.currency_uid || "USD"), required: true
+
+  .col.s12.center-align
+    #pwyw-switch.switch
+      %label
+        = t('.fixed_base_price')
+        = f.check_box :can_pay_what_you_want, { id: "can_pay_what_you_want" }
+        %span.lever
+        = t('.pay_what_you_want')
+
+.row
+  .col.s12
+    %h4
+      = t(".general_informations")
+
+  .col.s12
+    .input-field.with-info
+      = f.label :title, t('.title')
+      = f.text_field :title, required: true, class: "character_counter", length: 100
+      %span.input-info e.g. "full-body sketches", "charcoal painting"…
+
+  .col.s12
+    = f.label :category_id, t('.category')
+    = f.select :category_id, options_for_select(Category.includes(:styles).all.map { |c| [c.name, c.id, { "data-styles" => c.styles.map { |s| { id: s.id, name: s.name, selected: (f.object.style.present? ? f.object.style_id == s.id : s.key == "digital_colored") }}.to_json } ] }, selected: f.object.category.try(:id) || Category.find_by_key("artwork").try(:id))
+
+  .col.s12
+    = f.label :style_id, t('.style')
+    = f.select :style_id, []
+
+  .col.s12
+    = f.label :description, t('.description')
+    = f.text_area :description, required: true, class: "materialize-textarea", placeholder: t('.description_placeholder')
+
+  .col.s12
+    .input-field.with-info
+      = f.label :tag_list, t('.tag_list')
+      = f.text_field :tag_list, value: f.object.tags.map(&:name).reverse.join(","), data: { role: "materialtags" }
+      %span.input-info Comma separated list of tags to make your proposal easier to find. e.g. "nsfw", "inktober", "dragon"…
+
+  .col.s12
+    .input-field.with-info.bad-tags
+      = f.label :con_list, t('.con_list')
+      = f.text_field :con_list, value: f.object.cons.map(&:name).reverse.join(","), data: { role: "materialtags" }
+      %span.input-info Comma separated list of things you don't want to do. e.g. "yiff", "nazi", "violence"…
+
+.row
+  - if @user_assets.any?
+    .col.s12
+      %h4= raw t('.add_assets', pick_image_url: image_url('pick.png'), choose_image_url: image_url('choose.png'))
+    = f.fields_for :proposal_assets, @user_assets.map { |asset| ProposalAsset.find_or_initialize_by(proposal: f.object, asset: asset) } do |pf|
+      = render partial: 'shared/illustration_picker', locals: { f: f, pf: pf, banner: true }
+  - else
+    = render partial: 'shared/no_image'
+
+.row
+  .col.s12
+    %h4
+      = t(".conditions")
+
+  .col.s12
+    = f.label :delay_id, t('.delay')
+    = f.collection_select :delay_id, Delay.all, :id, :name, selected: f.object.delay.try(:id)
+
+  .col.s12
+    = f.label :tos, t('.tos')
+    = f.text_area :tos, required: false, class: "materialize-textarea", placeholder: t('.tos_placeholder')

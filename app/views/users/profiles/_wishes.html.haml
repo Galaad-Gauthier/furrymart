@@ -1,0 +1,11 @@
+- if @wishes.any?
+  .row
+    .col.s12.profile-section-nav
+      .card.title-card.z-depth-05.wish
+        .card-content
+          .flex-align
+            %h4.ellipsis= raw t(".title", { user_name: @user.name })
+
+    - if @wishes.any?
+      = render partial: "artists/proposals/proposal", collection: @wishes.map(&:proposal)
+      = render partial: "shared/card_filler", locals: { count: @wishes.count, height: 556 }

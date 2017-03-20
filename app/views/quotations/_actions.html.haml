@@ -1,0 +1,4 @@
+- if quotation.artist == current_user && params[:controller] == "artists/quotations"
+  = render partial: "quotations/artist_actions", locals: { quotation: quotation }
+- elsif quotation.commissioner == current_user && params[:controller] == "commissioners/quotations"
+  = render partial: "quotations/commissioner_actions", locals: { quotation: quotation }

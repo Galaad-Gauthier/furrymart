@@ -1,0 +1,7 @@
+%a.collection-item.avatar{href: profile_path(user_id: activity.owner.slug)}
+  = render partial: "shared/avatar", locals: { user: activity.owner }
+  %span.title= raw t('.title', { follower_name: h(activity.owner.name) })
+  %p.date= t("public_activity.shared.ago", { time: time_ago_in_words(activity.created_at) })
+  - if !current_user.have_read?(activity)
+    %span.secondary-content
+      %i.material-icons new_releases

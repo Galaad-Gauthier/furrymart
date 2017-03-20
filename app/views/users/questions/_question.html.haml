@@ -1,0 +1,26 @@
+%li.collection-item.avatar.question{id: "question-#{question.id}"}
+  = render partial: "shared/avatar", locals: { user: question.sender }
+  %p.date.ellipsis= raw t('.title', { sender_name: h(question.sender.name), sender_link: profile_path(user_id: question.sender.slug), time: time_ago_in_words(question.created_at) })
+  .body= format_text(question.body)
+
+  - if question.response.present?
+    - if policy(question).update?
+      %a.secondary-content{href: "#response-modal-#{question.id}", class: 'modal-trigger'}
+        %i.material-icons.left edit
+    %blockquote.response
+      %p.date.ellipsis= raw t('.title', { sender_name: h(question.recipient.name), sender_link: profile_path(user_id: question.recipient.slug), time: time_ago_in_words(question.updated_at) })
+      = format_text(question.response)
+  - else
+    - if policy(question).update?
+      %a.secondary-content{href: "#response-modal-#{question.id}", class: 'modal-trigger'}
+        %i.material-icons.left reply
+
+.modal{id: "response-modal-#{question.id}"}
+  = form_for([@user, question], html: { multipart: true }) do |f|
+    .modal-content
+      %h5= raw t('.modal_title', { user_name: h(@user.name) })
+      %blockquote
+        = format_text(question.body)
+      = f.text_area :response, class: 'materialize-textarea', placeholder: t('.response_placeholder')
+    .modal-footer
+      = f.button t('.send_response'), type: :submit, class: "modal-action modal-close waves-effect waves-green btn-flat"

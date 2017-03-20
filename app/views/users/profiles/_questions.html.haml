@@ -1,0 +1,42 @@
+- if @questions.any? || current_user != @user
+  .row
+    .col.s12.profile-section-nav
+      .card.title-card.z-depth-05
+        .card-content
+          .flex-align
+            %h4.ellipsis= raw t(".title")
+            - if current_user.present?
+              - if policy(Question.new(sender: current_user, recipient: @user)).create?
+                .hide-on-med-and-down
+                  = link_to '#question-modal', class: 'btn  z-depth-0 btn-large modal-trigger' do
+                    %i.material-icons.left add
+                    = t(".add")
+                .hide-on-large-only
+                  = link_to '#question-modal', class: 'btn-floating  z-depth-0 btn-large modal-trigger' do
+                    %i.material-icons.left add
+            - else
+              .hide-on-med-and-down
+                = link_to new_user_session_path, class: 'btn  z-depth-0 btn-large modal-trigger' do
+                  %i.material-icons.left add
+                  = t(".add")
+              .hide-on-large-only
+                = link_to new_user_session_path, class: 'btn-floating  z-depth-0 btn-large modal-trigger' do
+                  %i.material-icons.left add
+
+    - if @questions.any?
+      .col.s12
+        %ul.collection
+          = render partial: "users/questions/question", collection: @questions
+    - else
+      .col.s12
+        .card.notice-card
+          .card-content
+            .flow-text
+              %p
+                Here you can <strong>ask public questions to #{@user.name}</strong>. Don't worry, we will notify
+                you when one of your questions is answered.
+
+              %p
+                If your question is too personal or not relevant to others you can <a href="#{messages_path(recipient_id: user.slug)}">send #{@user.name} a private message</a>.
+
+  = render partial: "users/profiles/question_modal", locals: { user: @user, question: @question }

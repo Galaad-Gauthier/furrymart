@@ -1,0 +1,48 @@
+// Place all the styles related to the quotations controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#comments {
+  iframe.document {
+    width: 100%;
+    min-height: 500px;
+    border: 1px;
+  }
+
+  .conversation {
+    .attachment-container {
+      position: relative;
+      .btn-floating.btn-download {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+      }
+    }
+    .btn.btn-download {
+      margin: 2px 0;
+      display: block;
+    }
+  }
+
+  .files-to-upload:not(:empty) {
+    margin: 3px 0 6px 0;
+    .chip .close {
+      padding-right: 12px;
+    }
+  }
+
+  #quotation_comment_attachment {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+  }
+
+  .inline-invoice .col {
+    margin-top: 1.5em;
+  }
+
+  .payment-btn-form {
+    display: inline-block;
+    margin-left: 24px;
+  }
+}

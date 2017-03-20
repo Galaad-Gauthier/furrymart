@@ -1,0 +1,8 @@
+%div{itemscope: true, itemprop: "priceSpecification", itemtype: 'http://schema.org/PriceSpecification' }
+  %meta{itemprop: 'price', content: proposal.usd_price}
+  %meta{itemprop: 'priceCurrency', content: "USD"}
+%div{itemscope: true, itemprop: "itemOffered", itemtype: 'http://schema.org/Service' }
+  - if proposal.category.present? && proposal.style.present?
+    %meta{itemprop: 'category', content: "#{proposal.category.name}/#{proposal.style.name}" }
+%div{itemscope: true, itemprop: "seller", itemtype: 'http://schema.org/Person', itemid: profile_url(proposal.artist) }
+  %meta{itemprop: "name", content: proposal.artist.name}

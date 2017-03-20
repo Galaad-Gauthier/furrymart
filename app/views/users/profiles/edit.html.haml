@@ -1,0 +1,60 @@
+.container
+  .row
+    .col.s12.m12.l10.offset-l1
+      = form_for(@profile, url: user_profile_path(user: @profile.user), html: { method: :put }) do |f|
+        .card
+          .card-content
+            .avatar-upload
+              = f.label 'file' do
+                .avatar.circle{:style => "background-image: url('#{current_user.profile.avatar_url(:avatar)}')"}
+                  .edit-overlay
+                    %i.material-icons edit
+                  .preloader-wrapper.big.active
+                    .spinner-layer.spinner-blue-only
+                      .circle-clipper.left
+                        .circle
+                      .gap-patch
+                        .circle
+                      .circle-clipper.right
+                        .circle
+              = f.hidden_field 's3_avatar_url', value: @profile.s3_avatar_url
+              = f.file_field 'file', data: { "avatar-upload" => true, "owner" => current_user.id }, accept: image_mimes
+
+            .center-align
+              %h4{:style => "center-align"}
+                = @profile.user.name
+
+            = error_messages_for(f.object)
+
+            = f.text_area :biography, class: "materialize-textarea", placeholder: t('.biography')
+
+            .row
+              .col.s12
+                - Profile::SITES.each do |site|
+                  .input-field.with-info
+                    = f.label site, t("sites.#{site}")
+                    = f.text_field site, placeholder: t("sites.format.#{site}"), class: "character_counter", length: 300
+                    - if Profile::CERTIFIABLE_SITES.include? site
+                      - if @profile.send(site).blank?
+                        .input-info.right-align
+                          = link_to t(".how_to_verify_site", { site: h(t("sites.#{site}")) }).html_safe, "#verify-#{site}-account-modal", class: 'modal-trigger'
+                      - else
+                        .input-info.flex-align
+                          .div
+                            - if @profile.certified_sites.include? site
+                              %span.green-text= t(".verified")
+                            - else
+                              %span.red-text= t(".not_verified")
+                          = link_to t(".how_to_verify_site", { site: h(t("sites.#{site}")) }).html_safe, "#verify-#{site}-account-modal", class: 'modal-trigger'
+
+          .card-action.right-align
+            = f.button t('.submit'), class: 'btn waves-effect waves-light z-depth-0'
+
+- Profile::CERTIFIABLE_SITES.each do |site|
+  .modal{id: "verify-#{site}-account-modal"}
+    .modal-content
+      %h5= t(".how_to_verify_site", { site: h(t("sites.#{site}")) }).html_safe
+      %blockquote= t(".why_verify", { site: h(t("sites.#{site}")) }).html_safe
+      = render partial: "users/profiles/verify_instructions/#{site}", locals: { profile: @profile, site: site }
+    .modal-footer
+      %span.modal-action.modal-close.waves-effect.waves-green.btn-flat= t(".close")

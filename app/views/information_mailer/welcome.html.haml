@@ -1,0 +1,6 @@
+.mui--text-body1
+  = raw t('.body', {                                                               |
+      username: @user.name,                                                        |
+      profile_link: h(profile_url(user_id: @user.slug)),                           |
+      proposals_link: h(root_url)                                                  |
+    })                                                                             |

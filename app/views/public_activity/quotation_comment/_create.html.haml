@@ -1,0 +1,12 @@
+%a.collection-item.avatar{href: quotation_path(activity.trackable.quotation)}
+  = render partial: "shared/avatar", locals: { user: activity.owner }
+  - if activity.trackable.quotation.artist == activity.recipient
+    %span.title= raw t('.title_commissioner', { commissioner_name: h(activity.owner.name) })
+  - else
+    %span.title= raw t('.title_artist', { artist_name: h(activity.owner.name) })
+  - if activity.trackable.quotation.proposal.present?
+    %p= activity.trackable.quotation.proposal.title
+  %p.date= t("public_activity.shared.ago", { time: time_ago_in_words(activity.created_at) })
+  - if !current_user.have_read?(activity)
+    %span.secondary-content
+      %i.material-icons new_releases

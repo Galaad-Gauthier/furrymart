@@ -1,0 +1,55 @@
+#invoicing-modal.modal.modal-fixed-footer
+  = form_for Invoice.new, url: quotation_invoices_url(quotation_id: quotation.id, format: :json), method: :post, remote: true, data: { success: t(".success") } do |f|
+    = f.hidden_field :quotation_id, value: quotation.id
+    .modal-content
+      .row
+        .col.s12
+          %h5.black-text= raw t('.modal_title')
+      .row
+        .col.s12
+          .input-field
+            = f.label :invoice_reference, t('.invoice_reference')
+            = f.text_field :invoice_reference, value: t('.invoice_reference_placeholder', { id: "#{quotation.id}-#{quotation.invoices.count + 1}" })
+
+        .col.s12.l6
+          .input-field
+            = f.label :price, t('.price')
+            = f.number_field :price, value: quotation.try(:proposal).try(:price), required: true, step: "0.01"
+
+        .col.s12.l6
+          .input-field
+            = f.collection_select :currency_uid, Currency.all, :uid, :name, value: f.object.currency_uid, selected: (f.object.currency_uid || "USD"), required: true
+
+        .col.s12
+          .input-field
+            = f.label :invoicing_paypal_address, t('.invoicing_paypal_address')
+            = f.text_field :invoicing_paypal_address, value: quotation.artist.invoicing_paypal_address
+
+        .col.s12
+          .input-field
+            = f.label :due_date, t('.due_date')
+            = f.date_field :due_date, class: "datepicker", value: (DateTime.now + 1.day).strftime("%Y-%m-%d")
+
+          .input-field
+            .input-field.with-info
+              = f.label :invoicing_informations, t('.invoicing_informations')
+              = f.text_area :invoicing_informations, class: "materialize-textarea", value: quotation.artist.artist_invoicing_informations, placeholder: t('.invoicing_informations_placeholder')
+              %span.input-info= t('.invoicing_informations_help').html_safe
+
+          .input-field.with-info
+            = f.label :company_id, t('.company_id')
+            = f.text_field :company_id, value: quotation.artist.company_id
+            %span.input-info= t('.company_id_help')
+
+          .input-field.with-info
+            = f.label :vat_number, t('.vat_number')
+            = f.text_field :vat_number, value: quotation.artist.vat_number
+            %span.input-info= t('.vat_number_help')
+
+          .input-field
+            .input-field.with-info
+              = f.label :additional_informations, t('.additional_informations')
+              = f.text_area :additional_informations, class: "materialize-textarea"
+
+    .modal-footer
+      = f.button t('.submit'), type: :submit, class: "modal-action modal-close waves-effect waves-green btn-flat"

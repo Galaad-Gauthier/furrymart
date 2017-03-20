@@ -1,0 +1,90 @@
+.with-floating-button.has-assets
+  - if current_user == @user
+    .white.wide-banner.hide-on-small-only.z-depth-1
+      .container
+        .row.row-no-bottom-margin
+          .col.s12.flex-align
+            .input-field.with-checkbox.assets-visibility-switch{ data: { 'user-url' => user_registration_path(id: @user.id, format: :js), 'checked-message': t('.assets_visibility_public'), 'unchecked-message': t('.assets_visibility_hidden') }}
+              %input.filled-in{type: "checkbox", id: "are-assets-public", checked: @user.are_assets_public}
+              %label{for: "are-assets-public"}= t(".are_assets_public")
+            .preloader-wrapper.assets-preloader
+              .spinner-layer.spinner-blue-only
+                .circle-clipper.left
+                  .circle
+                .gap-patch
+                  .circle
+                .circle-clipper.right
+                  .circle
+            %div.flex-align
+              - if @user.profile.furaffinity.blank?
+                = link_to '#!', class: 'btn-flat tooltipped disabled-with-tooltip', data: { tooltip: t(".set_furaffinity_account") } do
+                  %i.material-icons.right sync
+                  = t('.import_from_furaffinity')
+              - else
+                = link_to "#import-from-furaffinity", class: "btn-flat modal-trigger" do
+                  %i.material-icons.right sync
+                  = t('.import_from_furaffinity')
+              - if policy(Asset.new(user: @user)).create?
+                = label_tag 'new_assets', class: 'hide-on-med-and-down' do
+                  .btn.z-depth-0
+                    %i.material-icons.right add
+                    = t('.new')
+  - else
+    .white.wide-banner.z-depth-1
+      .container
+        %h5= t(".assets_of", { username: @user.name }).html_safe
+
+  - if @assets.empty? && policy(Asset.new(user: @user)).create?
+    .container.full-height#assets-empty
+      .row
+        .col.s12.l10.offset-l1
+          .card.notice-card
+            .card-content
+              .flow-text
+                %p
+                  Here you can add any picture <strong>to illustrate your characters and commission requests</strong>.
+                  Don't hesitate to add as many as you want to make your requests clearer and help the artist understand
+                  what you have in mind.
+  .container
+    .row
+      #assets
+        - @assets.each do |asset|
+          = render partial: "users/assets/asset", locals: { asset: asset, can_update: policy(asset).update? }
+      .col.s12
+        .card.pagination-card
+          .card-content.center-align
+            = paginate @assets
+
+  - if policy(Asset.new(user: @user)).create?
+    .fixed-action-btn.click-to-toggle.hide-on-large-only
+      = label_tag 'new_assets' do
+        .preloader-wrapper.assets-preloader
+          .spinner-layer.spinner-blue-only
+            .circle-clipper.left
+              .circle
+            .gap-patch
+              .circle
+            .circle-clipper.right
+              .circle
+        .btn-floating.btn-large
+          %i.material-icons add
+
+= file_field_tag "new_assets", multiple: true, data: { "asset-upload" => true, "owner" => @user.id, "post_path" => user_assets_path(user_id: @user.slug, format: :js) }, accept: image_mimes
+
+#import-from-furaffinity.modal
+  .modal-content
+    .row
+      .col.s12
+        %h5= t('.import_assets_from_furaffinity').html_safe
+    .row
+      .col.s12
+        %ul.collection
+          %li.collection-item
+            Importing your assets from your account “<strong>#{@user.profile.furaffinity}</strong>” can take a few minutes.<br />
+          %li.collection-item
+            You can close this page or browse other pages while we are importing your pictures.
+          %li.collection-item
+            Use this importer again to sync new assets from Furaffinity.
+  .modal-footer.flex-align
+    = link_to t('.cancel'), '#', class: 'btn-flat modal-close'
+    = button_to t(".start_importing"), user_import_from_furaffinity_path(user_id: @user.slug), class: 'btn-flat modal-action modal-close', method: :put

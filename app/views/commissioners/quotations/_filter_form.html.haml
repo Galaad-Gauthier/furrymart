@@ -1,0 +1,3 @@
+= link_to t("quotations.states.all"), commissioner_quotations_path(commissioner_id: @commissioner.slug), class: "btn-flat ellipsis blue-text #{is_active_link?(commissioner_quotations_path(commissioner_id: @commissioner.slug), :exact) && 'active'}"
+- Quotation.aasm.states.map(&:name).each do |state|
+  = link_to t("quotations.states.#{state}"), commissioner_quotations_path(commissioner_id: @commissioner.slug, state: state), class: "btn-flat blue-text ellipsis #{commissioner_quotation_count_by_state(@commissioner, state).zero? && "disabled"} #{is_active_link?(commissioner_quotations_path(commissioner_id: @commissioner.slug, state: state), :exact) && 'active'}"

@@ -1,0 +1,65 @@
+.card.blue-grey.darken-1.inline-invoice
+  .card-content.white-text
+    .card-title
+      %strong= t(".invoice", reference: invoice.invoice_reference)
+    .row
+      .col.s12.m6.l4
+        %h5= t(".price")
+        = invoice.price
+      .col.s12.m6.l4
+        %h5= t(".currency")
+        = invoice.currency_uid
+      - if invoice.due_date.present?
+        .col.s12.m6.l4
+          %h5= t(".due_date")
+          = invoice.due_date.strftime("%F")
+      - if invoice.invoicing_paypal_address.present?
+        .col.s12
+          %h5= t(".invoicing_paypal_address")
+          - if ["http", "https"].include?(URI.parse(invoice.invoicing_paypal_address).scheme)
+            %span.blue-text.text-lighten-2= invoice.invoicing_paypal_address
+            = link_to t(".go_to_paypal"), build_paypal_me_link(invoice), class: "btn z-depth-0 blue-grey darken-3 payment-btn-form", target: "_blank", rel: "noopener"
+          - else
+            = invoice.invoicing_paypal_address
+            - if policy(invoice).paid? && invoice.quotation.artist.has_business_paypal?
+              %form{action: "https://www.paypal.com/cgi-bin/webscr", method: "POST", class: "payment-btn-form"}
+                %input{type: "hidden", NAME: "cmd", value: "_xclick"}
+                %input{type: "hidden", NAME: "business",value: invoice.invoicing_paypal_address}
+                - if invoice.quotation.proposal.present?
+                  %input{type: "hidden", NAME: "item_name", value: t("artists.proposals.proposal.style", { category: invoice.quotation.proposal.category.name, style: invoice.quotation.proposal.style.name })}
+                - else
+                  %input{type: "hidden", NAME: "item_name", value: t(".custom_commission") }
+
+                %input{type: "hidden", NAME: "item_number", value: "1"}
+                %input{type: "hidden", NAME: "amount", value: invoice.price}
+                %input{type: "hidden", name: "return", value: quotation_invoice_paypal_redirect_url(quotation_id: invoice.quotation.id, invoice_id: invoice.id)}
+                %input{type: "hidden", NAME: "currency_code", value: invoice.currency_uid}
+                %button.btn.z-depth-0.blue-grey.darken-3
+                  = t(".go_to_paypal")
+
+      - if invoice.quotation.commissioner.billing_paypal_address.present?
+        .col.s12
+          %h5= t(".billing_paypal_address")
+          = invoice.quotation.commissioner.billing_paypal_address
+
+    - if invoice.additional_informations.present?
+      %blockquote= format_text(invoice.additional_informations)
+  - if invoice.quotation.commissioner == current_user
+    .card-action.flex-align
+      = link_to quotation_invoice_url(quotation_id: invoice.quotation.id, id: invoice.encrypted_id, format: :pdf), class: 'btn-flat white-text ellipsis' do
+        %i.material-icons.left.white-text file_download
+        = t(".download_full_invoice")
+      - if policy(invoice).paid?
+        = button_to quotation_invoice_paid_path(quotation_id: invoice.quotation.id, invoice_id: invoice.id), method: :put, class: "btn z-depth-0 blue lighten-1" do
+          %i.material-icons.right.white-text attach_money
+          = t(".mark_as_paid")
+      - if policy(invoice).cancel_paid?
+        = button_to quotation_invoice_cancel_paid_path(quotation_id: invoice.quotation.id, invoice_id: invoice.id), method: :put, class: "btn z-depth-0 red lighten-1" do
+          %i.material-icons.right.white-text money_off
+          = t(".cancel_paid")
+
+  - else
+    .card-action.right-align
+      = link_to quotation_invoice_url(quotation_id: invoice.quotation.id, id: invoice.encrypted_id, format: :pdf), class: 'btn-flat white-text ellipsis' do
+        %i.material-icons.right.white-text file_download
+        = t(".download_full_invoice")

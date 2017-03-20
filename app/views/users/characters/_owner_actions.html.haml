@@ -1,0 +1,5 @@
+.card-action.flex-align
+  .visibility-switch{ data: { 'character-id' => character.slug, 'checked-message': t('.public_feedback', { character_name: character.name }), 'unchecked-message': t('.private_feedback', { character_name: character.name }) }}
+    %input.filled-in{type: "checkbox", id: "character-visibility-#{character.id}", checked: character.visible}
+    %label{for: "character-visibility-#{character.id}"}= t(".is_public")
+  = link_to t('.edit'), edit_user_character_path(user_id: current_user.id, id: character.id), class: 'blue-text'

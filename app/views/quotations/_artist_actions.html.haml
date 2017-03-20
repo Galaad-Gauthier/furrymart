@@ -1,0 +1,9 @@
+.card-action.flex-align
+  - if (policy(quotation).publish_for_artist? || policy(quotation).unpublish_for_artist?)
+    .visibility-switch{ data: { 'quotation-id' => quotation.id, 'role' => 'artist', 'checked-message': t('.request_public_feedback'), 'unchecked-message': t('.request_private_feedback') }}
+      %input.filled-in{type: "checkbox", id: "quotation-visibility-#{quotation.id}", checked: quotation.public_for_artist? }
+      %label{for: "quotation-visibility-#{quotation.id}"}= t(".is_public")
+  - else
+    %div
+
+  = link_to t('.details'), quotation_path(id: quotation.id), class: 'blue-text darken-4'

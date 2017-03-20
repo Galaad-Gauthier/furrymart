@@ -1,0 +1,18 @@
+// Place all the styles related to the users/profiles controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#watchers-modal .collection, #watching-modal .collection {
+  margin: 0;
+  a {
+    span {
+      line-height: 63px;
+      padding-left: 24px;
+    }
+    img.circle {
+      width: 63px;
+      height: 63px;
+      vertical-align: middle;
+    }
+  }
+}

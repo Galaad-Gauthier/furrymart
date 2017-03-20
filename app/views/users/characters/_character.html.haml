@@ -1,0 +1,21 @@
+.col.s12.m6.l4
+  .card.character{data: { "sorting-id": character.id } }
+    .card-image.card-cover.top-card-image{:style => "background-image: url('#{character.illustration_for(current_user, :thumbnail)}')"}
+      = link_to(character, class: 'fill') {}
+    .card-content
+      .ellipsis
+        %strong
+          = link_to character.name, character
+      %br
+      .ellipsis
+        = character.species
+
+      %h5= t('.description')
+      .ellipsis
+        = character.description
+
+    - if @user == current_user
+      = render partial: 'users/characters/owner_actions', locals: { character: character }
+    - else
+      .card-action.right-align
+        = link_to t('.see_more'), character, class: 'blue-text'

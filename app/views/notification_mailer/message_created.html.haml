@@ -1,0 +1,7 @@
+.mui--text-body1
+  %table{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
+    %tr
+      %td.mui-citation
+        = format_text(@message.body)
+.mui--text-center.mui-link
+  %a.mui-btn.mui-btn--primary{:href => "#{messages_url(recipient_id: @message.sender)}", :target => "_blank"}= t('.see_conversation')

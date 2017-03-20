@@ -1,0 +1,37 @@
+.container
+  .row
+    #messages.col.s12.l10.offset-l1.white.z-depth-1
+      - if @recipient.present?
+        .row.row-no-bottom-margin
+          #roster{class: "col s12 l4 #{params[:recipient_id].present? && 'hide-on-med-and-down'}"}
+            .collection
+              - @roster.each do |user|
+                = link_to messages_path(recipient_id: user.slug), class: "collection-item avatar #{@recipient == user && 'active'}" do
+                  = render partial: "shared/avatar", locals: { user: user }
+                  %span.title.ellipsis= user.name
+                  - if current_user_has_new_messages_from?(user)
+                    %span.secondary-content
+                      %i.material-icons new_releases
+          #chatbox{class: "col s12 l8 #{params[:recipient_id].blank? && 'hide-on-med-and-down'}"}
+            = link_to messages_path, class: "btn-flat hide-on-large-only back-to-roster" do
+              %i.material-icons.left navigate_before
+              = @recipient.name
+            %ul.collection
+              - @messages.each do |message|
+                %li.collection-item.avatar.message
+                  = render partial: "shared/avatar", locals: { user: message.sender }
+                  = link_to message.sender.name, profile_url(user_id: message.sender.slug), class: 'title'
+                  %p.date= t(".ago", { time: time_ago_in_words(message.created_at) })
+                  = format_text(message.body)
+            = form_for @draft, url: messages_path, method: :post, remote: true do |f|
+              = f.hidden_field :sender_id, value: @draft.sender_id
+              = f.hidden_field :recipient_id, value: @draft.recipient_id
+              = f.text_area :body, class: "materialize-textarea", placeholder: t('.message_placeholder'), autofocus: true, required: true
+              .right-align
+                = f.button class: 'btn waves-effect waves-light z-depth-0' do
+                  %i.material-icons.right send
+                  send
+      - else
+        #no-conversation.row.row-no-bottom-margin
+          .col.s12.flow-text
+            = t(".no_conversation")

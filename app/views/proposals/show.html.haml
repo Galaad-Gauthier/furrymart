@@ -1,0 +1,70 @@
+- content_for(:page_title) { t('.page_title', { artist_name: @proposal.artist.name, title: @proposal.title }) }
+- content_for(:description) { t('.meta.description', { artist_name: @proposal.artist.name, title: @proposal.title, price: @proposal.price }) }
+- content_for(:author) { @proposal.artist.name }
+- content_for(:image) { @proposal.illustration_for(current_user) }
+
+.container
+  .row
+    .col.s12.l10.offset-l1
+      .card.page-card-with-image.proposal{itemscope: true, itemtype: "http://schema.org/Offer", itemid: proposal_url(@proposal)}
+        = render partial: "proposals/meta", locals: { proposal: @proposal }
+
+        .card-image.card-cover.top-card-image{:style => "background-image: url('#{@proposal.illustration_for(current_user, :banner)}')"}
+          = render partial: "proposals/wish_trigger", locals: { user: current_user, proposal: @proposal }
+
+          .card-title.card-title-onbright
+            = raw t('.title', { title: h(@proposal.title), artist_name: h(@proposal.artist.name), artist_path: profile_path(user_id: @proposal.artist.slug) })
+        .card-content
+
+          .row
+            .col.s12
+              - @proposal.tags.pluck(&:name).each do |_, tag, _|
+                = link_to tag, proposals_path(q: tag), class: "tag blue white-text"
+
+          - if @proposal.cons.any?
+            .row
+              .col.s12
+                %h4.top= t('.wont_do')
+                - @proposal.cons.pluck(&:name).each do |_, tag, _|
+                  = link_to tag, proposals_path(q: tag), class: "tag red darken-4 white-text"
+
+          .row
+            .col.s12
+              %h4.top= t('.description')
+              %p= format_text(@proposal.description)
+              - if @proposal.tos.present?
+                %h4= t('.tos')
+                %p= format_text(@proposal.tos)
+          .row
+            .col.s6
+              %h4= t('.price')
+              %p
+                - if @proposal.can_pay_what_you_want?
+                  = t('.can_pay_what_you_want')
+                - else
+                  = @proposal.formatted_price
+                  - if @proposal.currency_uid != "USD"
+                    %br
+                    %span.approximated-usd-price= @proposal.formatted_usd_price
+            .col.s6
+              %h4= t('.delay')
+              %p= @proposal.delay.try(:name)
+
+          - if @proposal_assets.any?
+            %h4= t('.assets')
+            .row
+              -  @proposal_assets.each do |asset|
+                .col.s12.m6.l4
+                  = render partial: 'shared/illustration', locals: { asset: asset }
+
+          - if @proposal.artist.company_id.present?
+            .card-notice.green-text.text-darken-2= t(".is_invoiceable")
+
+        - if @proposal.artist != current_user
+          .card-action.no-padding
+            - if policy(Quotation.new(proposal: @proposal, commissioner: current_user, artist: @proposal.artist)).new?
+              = link_to t('.commission'), new_proposal_quotation_path(proposal_id: @proposal.slug), class: 'btn  btn-full waves-effect waves-light'
+            - else
+              = link_to t('.not_open'), '#', class: 'btn-flat btn-full disabled'
+        - else
+          = render partial: "proposals/artist_actions", locals: { proposal: @proposal }

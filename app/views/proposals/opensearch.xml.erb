@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName><%= FurryMart::Application.config.site_name %></ShortName>
+  <Description><%= FurryMart::Application.config.site_name %> search</Description>
+  <Tags><%= @keywords.join(",") %></Tags>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="32" height="32"><%= image_url "favicon.ico" %></Image>
+
+  <Url type="text/html" template="<%= root_url %>proposals?q={searchTerms}" />
+
+</OpenSearchDescription>

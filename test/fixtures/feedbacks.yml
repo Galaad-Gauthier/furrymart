@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: feedbacks
+#
+#  attachment :string
+#  body       :text
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  updated_at :datetime         not null
+#  user_id    :integer
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: 
+  body: MyText
+
+two:
+  user: 
+  body: MyText

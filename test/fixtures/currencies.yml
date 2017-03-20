@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: currencies
+#
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  name       :string
+#  uid        :string
+#  updated_at :datetime         not null
+#  usd_rate   :float
+#
+
+dollar: 
+  name: "United States Dollar"
+  uid: "USD"
+  usd_rate: 1
+
+euro:
+  name: "Euro"
+  uid: "EUR"
+  usd_rate: 1.30

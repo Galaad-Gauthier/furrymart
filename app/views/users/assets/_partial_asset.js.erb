@@ -1,0 +1,8 @@
+var body = $("<%= escape_javascript(render(partial: 'users/assets/asset', locals: { asset: @asset, can_update: policy(@asset).update? })) %>");
+<% if params[:action] == "create" %>
+  $("#assets").prepend(body);
+<% else %>
+  $("#asset-<%= @asset.id %>").replaceWith(body);
+<% end %>
+
+$("#assets-empty").hide();

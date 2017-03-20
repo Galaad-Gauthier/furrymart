@@ -1,0 +1,6 @@
+.col.s12.l10.offset-l1
+  .card.announcement
+    .card-content
+      = render partial: "announcements/text", locals: { announcement: announcement }
+    .card-action.right-align
+      = link_to t(".comments", { count: announcement.comments.count }), announcement_path(announcement, anchor: "comments"), class: 'blue-text'

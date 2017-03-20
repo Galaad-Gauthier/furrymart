@@ -1,0 +1,40 @@
+# == Schema Information
+#
+# Table name: characters
+#
+#  banner_id   :integer
+#  created_at  :datetime         not null
+#  description :text
+#  id          :integer          not null, primary key
+#  is_deleted  :boolean          default(FALSE)
+#  name        :string
+#  slug        :string
+#  species     :string
+#  updated_at  :datetime         not null
+#  user_id     :integer
+#  visible     :boolean          default(FALSE)
+#
+
+one:
+  name: one
+  species: one
+  description: MyText
+  user: commissioner
+  slug: "character-1"
+  visible: true
+
+two:
+  name: two
+  species: one
+  description: MyText
+  user: commissioner
+  slug: "character-2"
+  visible: true
+
+invisible:
+  name: invisible
+  species: one
+  description: MyText
+  user: commissioner
+  slug: "character-3"
+  visible: false

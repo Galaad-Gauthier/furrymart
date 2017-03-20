@@ -1,0 +1,12 @@
+.container
+  .row
+    .col.s12.l10.offset-l1
+      = form_for(@proposal, url: artist_proposals_path(artist_id: current_user), method: :post) do |f|
+        .card
+          .card-content
+            %h4.top
+              %strong= t(".title")
+            = render partial: 'artists/proposals/form', locals: { f: f, proposal: Proposal.new }
+          .card-action.right-align
+            = f.button t('.submit_invisible'), name: 'invisible', class: 'btn-flat waves-effect waves-light'
+            = f.button t('.submit_visible'), name: 'visible', class: 'btn z-depth-0 waves-effect waves-light'

@@ -1,0 +1,15 @@
+.card.quotation
+  %a.card-image.card-cover.top-card-image{:href => quotation_path(quotation), :class => "#{!policy(quotation).show? && 'disabled'}", :style => "background-image: url('#{quotation.proposal.illustration_for(current_user, :thumbnail)}')"}
+    %span.new.badge{"data-badge-caption" => "#{t("quotations.state.#{quotation.state}")}"}
+    %span.card-title.card-title-onbright= raw t('.commissioner_title', { proposal_title: h(quotation.proposal.title), artist_name: h(quotation.artist.name) })
+
+  .card-content
+    .row
+      .col.s6.ellipsis
+        %h5.ellipsis= t('.price')
+        = quotation.proposal.formatted_price
+      .col.s6.ellipsis
+        %h5.ellipsis= t('.delay')
+        = quotation.proposal.delay.try(:name)
+
+  = render partial: "quotations/actions", locals: { quotation: quotation }

@@ -1,0 +1,32 @@
+aws_url = '<%= ENV["DIRECT_UPLOAD_S3_URL"] %>'
+bucket = '<%= ENV["DIRECT_UPLOAD_S3_BUCKET"] %>'
+
+evaporate = new Evaporate
+  awsSignatureVersion: '2'
+  signerUrl: '/s3/sign'
+  aws_key: '<%= ENV["DIRECT_UPLOAD_AWS_ACCESS_KEY_ID"] %>'
+  aws_url: aws_url
+  bucket: bucket
+
+$(document).on 'turbolinks:load', ->
+  $("*[data-avatar-upload]").each (i, _elem) ->
+    elem = $(_elem);
+    container = elem.parents(".avatar-upload")
+    avatar = container.find(".avatar")
+
+    elem.change (event) ->
+      file = event.target.files[0];
+
+      container.addClass("uploading")
+
+      extension = file.name.split('.').pop()
+      promise = evaporate.add
+        name: "#{elem.data('owner')}/#{Math.floor(Date.now())}.#{extension}"
+        file: file
+        complete: (_xhr, path) ->
+          container.removeClass("uploading")
+
+          fileUrl = aws_url + '/' + bucket + '/' + path
+          avatar.css("background-image": "url(#{fileUrl})")
+          container.find("input[type='file']").val('')
+          container.find("input[type='hidden']").val(fileUrl)

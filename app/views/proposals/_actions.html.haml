@@ -1,0 +1,4 @@
+- if proposal.artist == current_user
+  = render partial: "proposals/artist_actions", locals: { proposal: proposal }
+- else
+  = render partial: "proposals/commissioner_actions", locals: { proposal: proposal }

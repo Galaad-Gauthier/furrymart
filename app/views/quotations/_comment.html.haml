@@ -1,0 +1,34 @@
+%h5
+  = link_to comment.sender.name, profile_path(comment.sender)
+%p
+  = format_text(comment.body)
+
+- comment.attachments.where(subject_type: "Invoice").find_each do |attachment|
+  .row
+    .col.s12
+      = render partial: "quotations/invoice", locals: { invoice: attachment.subject }
+
+- comment.attachments.where(subject: nil).find_each do |attachment|
+  - if is_image_url?(attachment.file_url)
+    .row
+      .col.s12
+        .attachment-container
+          %p.comment-image-container
+            %img.materialboxed{:src => "#{attachment.image_url(:original)}", :width => "100%"}
+          = link_to attachment.file_url, download: true, class: 'btn-floating btn-download' do
+            %i.material-icons file_download
+  - elsif is_document_url?(attachment.file_url)
+    .row
+      .col.s12
+        .attachment-container
+          %iframe.document{src: "https://drive.google.com/viewerng/viewer?url=#{URI.encode(attachment.file_url)}&pid=explorer&efh=false&a=v&chrome=false&embedded=true"}
+          = link_to attachment.file_url, download: true, class: 'btn-floating btn-download' do
+            %i.material-icons file_download
+
+- comment.attachments.each do |attachment|
+  - if is_regular_url?(attachment.file_url)
+    .row
+      .col.s12
+        = link_to attachment.file_url, download: true, class: 'btn btn-download z-depth-0 ellipsis' do
+          %i.material-icons.right file_download
+          = attachment.original_filename

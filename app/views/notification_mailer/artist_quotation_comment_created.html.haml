@@ -1,0 +1,20 @@
+.mui--text-body1
+  - if @quotation.proposal.present?
+    = raw t('.body', {                                                       |
+          artist_link: h(profile_url(user_id: @quotation.artist.slug)),                      |
+          artist_name: h(@quotation.artist.name),                                            |
+          quotation_link: h(quotation_url(@quotation)),                                      |
+          proposal_title: h(@quotation.proposal.title)                                       |
+      })                                                                                     |
+%br/
+%table{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
+  %tr
+    %td.mui-citation
+      = format_text(@quotation_comment.body)
+      - @quotation_comment.attachments.each do |attachment|
+        %div
+          = link_to attachment.original_filename || t(".attachment"), attachment.file_url
+%br/
+%br/
+.mui--text-center
+  %a.mui-btn.mui-btn--primary{:href => "#{quotation_url(@quotation)}", :target => "_blank"}= t('.show_quotation')

@@ -1,0 +1,15 @@
+= f.hidden_field :user_id, value: f.object.user_id
+
+.modal-content.left-align
+  .row
+    .col.s12
+      %h4= t('.update')
+  .row
+    .col.s12
+      .input-field
+        = f.label :description, t('.description')
+        = f.text_field :description, length: 100, class: "character_counter"
+        %span.input-info e.g. "back view", "best tail"…
+
+.modal-footer
+  = f.button t('.upload'), class: 'waves-effect waves-light btn-flat modal-action modal-close'

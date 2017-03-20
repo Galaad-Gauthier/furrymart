@@ -1,0 +1,4 @@
+- if @quotation.artist == current_user
+  = t('.artist_page_title', { commissioner_name: @quotation.commissioner.name })
+- else
+  = t('.commissioner_page_title', { artist_name: @quotation.artist.name })

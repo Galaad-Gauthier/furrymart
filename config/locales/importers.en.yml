@@ -1,0 +1,8 @@
+en:
+  importers:
+    furaffinity:
+      start: Importing from FurAffinity
+      page: Reading page %{number}
+      picture: 'Downloading "%{description}"'
+      skip: 'Skipping "%{description}"'
+      end: FurAffinity import finished

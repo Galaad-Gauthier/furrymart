@@ -1,0 +1,48 @@
+.container.full-height
+  .row.valign-wrapper.full-height
+    .col.s12.m12.l6.offset-l3.valign
+      = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+        .card.z-depth-05
+          .card-content
+            = f.hidden_field :language, value: :en
+
+            = devise_error_messages!
+
+            - if has_twitter_signin?
+              .row
+                .col.s12.center-align
+                  = link_to user_twitter_omniauth_authorize_path, class: "btn btn-large twitter-signin z-depth-0" do
+                    = t('.sign_in_with_twitter')
+                    = image_tag "twitter_logo.png"
+
+              %hr.or
+
+            .row
+              .col.s12
+                .input-field
+                  = f.label :name, t('.name')
+                  = f.text_field :name, autofocus: true, required: true, class: "character_counter", length: 100
+
+              .col.s12
+                .input-field
+                  = f.label :email, t('.email')
+                  = f.email_field :email, required: true
+
+              .col.s12
+                .input-field
+                  = f.label :password, t('.password')
+                  = f.password_field :password, autocomplete: "off", required: true
+
+              .col.s12
+                .input-field
+                  = f.label :password_confirmation, t('.password_confirmation')
+                  = f.password_field :password_confirmation, autocomplete: "off", required: true
+
+            .row
+              .col.s12
+                = f.check_box :show_adult_content, id: "show_adult_content"
+                = f.label(:show_adult_content, t('.show_adult_content'), for: "show_adult_content")
+
+          .card-action.flex-align
+            = link_to t('.sign_in'), new_session_path(resource_name), class: 'black-text'
+            = f.button t('.submit'), class: 'btn waves-effect waves-light z-depth-0'

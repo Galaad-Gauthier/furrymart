@@ -1,0 +1,18 @@
+- if !is_owner
+  = link_to new_artist_quotation_path(artist_id: user.slug), :class => 'btn-flat black-text' do
+    = t('.ask_for_a_quote')
+
+  = link_to messages_path(recipient_id: user.slug), :class => 'btn-flat black-text' do
+    = t('.send_message')
+
+  - if current_user.present?
+    = link_to '#report-modal', class: 'btn-flat modal-trigger red-text' do
+      = t(".report")
+
+- else
+  = link_to edit_user_registration_path, class: 'btn-flat black-text' do
+    = t('.edit_user_registration')
+  = link_to edit_payment_settings_user_registration_path, class: 'btn-flat black-text' do
+    = t('.edit_payment_settings')
+  = link_to edit_user_profile_path(user_id: current_user.slug), class: 'btn-flat black-text' do
+    = t('.edit_user_profile')

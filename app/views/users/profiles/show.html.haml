@@ -1,0 +1,23 @@
+- content_for(:page_title) { @user.name }
+- content_for(:description) { t(".meta.description", { user_name: @user.name }) }
+- content_for(:author) { @user.name }
+- content_for(:image) { [ @user.proposals.first, @user.characters.first ].compact.first.try(:illustration_for, current_user) }
+
+= render partial: 'users/profiles/profile', locals: { user: @user, is_owner: current_user == @user }
+
+.with-floating-button
+  .container
+    - { proposals: @proposals.any?, characters: @characters.any?, assets: @assets.any?, questions: @questions.any?, wishes: @wishes }.sort_by { |k, v| v ? 0 : 1 }.map { |resource| resource[0] }.each do |resource|
+      = render partial: "users/profiles/#{resource}", locals: { user: @user }
+
+.fixed-action-btn.click-to-toggle.hide-on-large-only
+  %a.btn-floating.btn-large.modal-trigger{href: "#profile-actions-modal"}
+    %i.material-icons menu
+
+#profile-actions-modal.modal.bottom-sheet.filter-modal
+  .modal-content
+    .row.row-no-bottom-margin
+      .col.s12.center-align
+        = render partial: 'users/profiles/actions', locals: { user: @user, is_owner: current_user == @user }
+
+= render partial: "users/profiles/report_modal", locals: { user: @user, report: @report }

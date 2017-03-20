@@ -1,0 +1,46 @@
+# == Schema Information
+#
+# Table name: profiles
+#
+#  avatar           :string
+#  biography        :text
+#  certified_sites  :text             default([]), is an Array
+#  characters_order :integer          default([]), is an Array
+#  created_at       :datetime         not null
+#  id               :integer          not null, primary key
+#  is_invoiceable   :boolean          default(FALSE)
+#  proposals_order  :integer          default([]), is an Array
+#  sites            :hstore           default({})
+#  updated_at       :datetime         not null
+#  user_id          :integer
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+artist:
+  user: artist
+  biography: hello
+  sites:
+    furaffinity: https://test.com
+
+commissioner:
+  user: commissioner
+  biography: hello
+  sites:
+    furaffinity: https://test.com
+
+other:
+  user: other
+  biography: hello
+  sites:
+    furaffinity: https://test.com
+
+another:
+  user: another
+  biography: hello
+  sites:
+    furaffinity: https://test.com

@@ -1,0 +1,8 @@
+#refuse-modal.modal
+  = form_for quotation, url: quotation_refuse_path(quotation_id: quotation.id), method: :put do |f|
+    .modal-content
+      %h5.black-text= raw t('.modal_title')
+      = f.select :refuse_reason, options_for_select(Quotation::REFUSE_REASONS.map { |id| [ t("activerecord.attributes.refuse_reason.values.#{id}"), id ] })
+      = f.text_area :refuse_comment, class: 'materialize-textarea black-text', placeholder: t('.comment')
+    .modal-footer
+      = f.button t('.submit'), type: :submit, class: "modal-action modal-close waves-effect waves-green btn-flat"

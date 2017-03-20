@@ -1,0 +1,32 @@
+- content_for(:page_title) { t('.page_title', { character_name: @character.name }) }
+- content_for(:description) { t(".meta.description", { character_name: @character.name, character_species: @character.species }) }
+- content_for(:author) { @character.user.name }
+- content_for(:image) { @character.illustration_for(current_user) }
+
+.container
+  .row
+    .col.s12.l10.offset-l1
+      .card.page-card-with-image.character
+        .card-image.card-cover.top-card-image{:style => "background-image: url('#{@character.illustration_for(current_user, :banner)}')"}
+
+          .card-title.card-title-onbright
+            %div
+              = @character.name
+
+        .card-content
+          %h4= t('.description')
+          %p= format_text(@character.description)
+          .row
+            .col.s6
+              %h4= t('.species')
+              %p= @character.species
+            .col.s6
+
+          - if @character_assets.any?
+            %h4= t('.assets')
+            .row
+              - @character_assets.each do |asset|
+                .col.s12.m6.l4
+                  = render partial: 'shared/illustration', locals: { asset: asset }
+        - if @character.user == current_user
+          = render partial: 'users/characters/owner_actions', locals: { character: @character }

@@ -1,0 +1,34 @@
+%h4.top= raw t('.title', { artist_name: h(f.object.artist.name) })
+%blockquote= t('.disclaimer')
+
+= f.hidden_field :artist_id, value: f.object.artist_id
+= f.hidden_field :commissioner_id, value: f.object.commissioner_id
+= f.hidden_field :tos_accepted, value: true
+
+.row
+  .col.s12{style: "margin-top: 1em"}
+    = error_messages_for(f.object)
+    = f.text_area :description, autofocus: true, required: true, id: "description", class: "materialize-textarea", placeholder: t('.body')
+
+  - if pundit_policy_scope(current_user.characters).any?
+    .col.s12
+      %h4= t('.add_characters')
+    %input{:name => "quotation[characters_ids][]", :type => "hidden"}/
+    - pundit_policy_scope(current_user.characters).each do |character|
+      .col.s12.m6.l4
+        .card.z-depth-05
+          .card-image.card-cover.top-card-image{"data-check" => "character-#{character.id}", :style => "background-image: url('#{character.illustration_for(current_user, :thumbnail)}')"}
+            .card-title.card-title-onbright.center-align.asset-description{"data-check" => "character-#{character.id}"}
+              %em{"data-check" => "character-#{character.id}"}= character.name
+          .card-action.center-align.no-border.no-bottom.empty-label
+            = check_box_tag('quotation[character_ids][]', character.id, f.object.characters.include?(character), { id: "character-#{character.id}" })
+            = label_tag("character-#{character.id}") {}
+
+  - if addition_illustrations.any?
+    .col.s12
+      %h4= raw t('.add_assets', pick_image_url: image_url('pick.png'), choose_image_url: image_url('choose.png'))
+    = f.fields_for :quotation_assets, addition_illustrations.map { |asset| QuotationAsset.find_or_initialize_by(quotation: f.object, asset: asset) } do |pf|
+      = render partial: 'shared/illustration_picker', locals: { f: f, pf: pf, banner: false }
+
+  - if pundit_policy_scope(current_user.characters).none? && addition_illustrations.none?
+    = render partial: 'shared/no_image'

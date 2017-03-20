@@ -1,0 +1,10 @@
+.container
+  .row
+    .col.s12.l10.offset-l1
+      = form_for(@quotation, url: proposal_quotations_path(proposal_id: @proposal.slug)) do |f|
+        .card.page-card.quotation
+          .card-content
+            = render partial: 'proposals/quotations/form', locals: { f: f }
+          .card-action.right-align
+            = f.button t('proposals.quotations.form.save_as_draft'), name: :draft, class: 'btn-flat waves-effect waves-light ellipsis'
+            = f.button t('proposals.quotations.form.submit'), name: :publish, class: 'btn z-depth-0 waves-effect waves-light ellipsis'

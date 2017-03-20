@@ -1,0 +1,47 @@
+.attachment-wrapper {
+  width: calc(100% - 100px);
+  > .btn, .btn-floating {
+    margin: 0px 6px 0 0;
+  }
+  .file-field {
+    .btn, .btn-floating, input[type='file'] {
+      cursor: pointer;
+    }
+  }
+}
+
+.attachment-upload {
+  position: relative;
+  @media(max-width: 1200px) {
+    .preloader-wrapper {
+      display: none;
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+  }
+  @media(min-width : 1201px) {
+    .preloader-wrapper {
+      display: none;
+      width: 36px;
+      height: 36px;
+      position: absolute;
+      right: -46px;
+      top: 0px;
+    }
+  }
+  &.uploading {
+    .btn, .btn-floating {
+      opacity: 0.2;
+    }
+    .file-path-wrapper {
+      visibility: hidden;
+      display: none !important;
+    }
+    .preloader-wrapper {
+      display: block;
+    }
+  }
+}

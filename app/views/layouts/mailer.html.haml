@@ -1,0 +1,33 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    = stylesheet_link_tag "mailer"
+  %body
+    %table.mui-body{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+      %tr
+        %td
+          %center
+            .mui-container
+              %h1.mui--text-center= FurryMart::Application.config.site_name
+              %table{cellpadding: "0", cellspacing: "0", border: "0", width: "100%"}
+                %tr
+                  %td.mui-panel
+                    %table{id: "content-wrapper", border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+                      %tbody
+                        %tr
+                          %td
+                            %h2= @_message.subject
+                        %tr
+                          %td.mui--divider-top
+                            = yield
+                            - if ENV["TWITTER_LINK"].present?
+                              %br
+                              %br
+                              .mui--text-center
+                                = link_to ENV["TWITTER_LINK"] do
+                                  = image_tag "https://furrymart.com/twitter_logo_email.png"
+
+              .mui--text-center
+                %br
+                %a.mui--text-menu{:href => edit_user_registration_url, :target => "_blank"}= t('.edit_user_profile')

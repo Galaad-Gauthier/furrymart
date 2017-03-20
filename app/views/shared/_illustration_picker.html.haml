@@ -1,0 +1,15 @@
+.col.s12.m6.l4
+  .card.z-depth-05
+    .banner-selector
+      - if banner
+        = f.radio_button :banner_id, pf.object.asset_id
+        = f.label([:banner_id, pf.object.asset_id].join("_")) { "" }
+    .card-image.card-cover.top-card-image{"data-check" => "asset-#{pf.object.asset.id}", :style => "background-image: url('#{pf.object.asset.file_url(:thumbnail)}')"}
+      .card-title.card-title-onbright.center-align.asset-description{"data-check" => "asset-#{pf.object.asset.id}"}
+        %em.ellipsis{"data-check" => "asset-#{pf.object.asset.id}"}
+          = (pf.object.asset.description.present? ? pf.object.asset.description : t('.no_description'))
+    .card-action.center-align.no-border.no-bottom.empty-label
+      = pf.hidden_field :id, value: pf.object.id
+      = pf.hidden_field :asset_id, value: pf.object.asset_id
+      = pf.check_box :_destroy, { id: "asset-#{pf.object.asset.id}", checked: f.object.assets.include?(pf.object.asset) }, 'f', 't'
+      = pf.label("asset-#{pf.object.asset.id}", "data-check" => "asset-#{pf.object.asset.id}") { "" }

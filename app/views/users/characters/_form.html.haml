@@ -1,0 +1,26 @@
+.row
+  .col.s12
+    = error_messages_for(f.object)
+    = f.hidden_field :visible, value: f.object.visible
+
+    .input-field
+      = f.label :name, t('.name')
+      = f.text_field :name, required: true, autofocus: true, class: "character_counter", length: 100
+
+    .input-field
+      = f.label :species, t('.species')
+      = f.text_field :species, required: true, class: "character_counter", length: 100
+
+    .input-field
+      = f.label :description, t(".description")
+      = f.text_area :description, required: true, class: "materialize-textarea", placeholder: t('.description_placeholder')
+
+.row
+  - if @character_assets.any?
+    .col.s12
+      %h4= raw t('.add_assets', pick_image_url: image_url('pick.png'), choose_image_url: image_url('choose.png'))
+    = f.fields_for :character_assets, @character_assets.map { |asset| CharacterAsset.find_or_initialize_by(character: f.object, asset: asset) } do |pf|
+      = render partial: 'shared/illustration_picker', locals: { f: f, pf: pf, banner: true }
+
+  - else
+    = render partial: 'shared/no_image'

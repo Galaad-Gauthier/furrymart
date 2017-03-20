@@ -1,0 +1,9 @@
+- if current_user.present?
+  #report-modal.modal
+    = form_for([user, report], html: { multipart: true }) do |f|
+      .modal-content
+        %h5.black-text= raw t('.modal_title', { user_name: h(user.name) })
+        = f.hidden_field :reporter_id, value: current_user.id
+        = f.text_area :body, class: 'materialize-textarea black-text', placeholder: t('.question_placeholder')
+      .modal-footer
+        = f.button t('.send_question'), type: :submit, class: "modal-action modal-close waves-effect waves-green btn-flat"

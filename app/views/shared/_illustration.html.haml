@@ -1,0 +1,9 @@
+.card.z-depth-05{itemscope: true, itemtype: "http://schema.org/Painting", itemid: user_asset_url(user_id: asset.user.slug, id: asset.id)}
+  %meta{itemprop: "thumbnailUrl", content: asset.file_url(:thumbnail)}
+  %meta{itemprop: "genre", content: "Furry"}
+  %div{:style => "background-image: url('#{asset.file_url(:thumbnail)}')", class: "card-image card-cover top-card-image #{(asset.is_adult_content && 'nsfw')}"}
+    .card-title.card-title-onbright.center-align.asset-description.ellipsis
+      %em{itemprop: "description"}= (asset.description.present? ? asset.description : t('.no_description'))
+    / That the worst thing I have ever done
+    - 5.times do
+      %img.materialboxed{:src => "#{asset.file_url}", :data => { caption: (asset.description.present? ? asset.description : t('.no_description')) } }

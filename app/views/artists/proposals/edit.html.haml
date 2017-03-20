@@ -1,0 +1,12 @@
+.container
+  .row
+    .col.s12.l10.offset-l1
+      = form_for(@proposal, url: artist_proposal_path({artist_id: current_user.slug, id: @proposal.slug})) do |f|
+        .card
+          .card-content
+            %h4.top= raw t(".title", { proposal_title: h(@proposal.title) })
+            = render partial: 'artists/proposals/form', locals: { f: f, proposal: @proposal }
+          .card-action.flex-align
+            = link_to artist_proposal_path(artist_id: current_user.slug, id: @proposal.slug), :class => 'btn-floating tooltipped', "data-position" => "bottom", "data-delay" => "50", "data-tooltip" => t('.destroy_tooltip'), :method => :delete, 'data-confirm' => t('.destroy_confirmation') do
+              %i.material-icons delete
+            = f.button t('.submit'), name: (@proposal.visible ? 'visible' : 'invisible'), class: 'btn waves-effect waves-light z-depth-0'

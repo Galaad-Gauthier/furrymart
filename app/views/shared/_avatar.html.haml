@@ -1,0 +1,4 @@
+- if defined?(with_status) && with_status
+  %img{alt: user.name, class: "circle responsive-img avatar with-status #{user_class(user)} tooltipped", src: user.profile.avatar_url(:avatar), data: { tooltip: t(".#{user_class(user)}") }}
+- else
+  %img{alt: user.name, class: "circle responsive-img avatar", src: user.profile.avatar_url(:avatar)}

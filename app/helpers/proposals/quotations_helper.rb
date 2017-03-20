@@ -1,0 +1,2 @@
+module Proposals::QuotationsHelper
+end

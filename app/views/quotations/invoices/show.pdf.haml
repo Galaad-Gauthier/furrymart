@@ -1,0 +1,60 @@
+%html
+  %head
+    = wicked_pdf_stylesheet_link_tag 'application'
+    = wicked_pdf_stylesheet_link_tag 'pdf'
+  %body
+    .container
+      .row
+        .col.s6
+          %h2 Invoice
+          %h5
+            Reference: ##{@invoice.invoice_reference}
+          - if @invoice.company_id.present?
+            %p= @invoice.company_id
+          %p= @artist.name
+          = format_text @invoice.invoicing_informations
+          - if @invoice.vat_number.present?
+            %p
+              VAT number: #{@invoice.vat_number}
+          - else
+            %p
+              VAT exempt
+          - if @invoice.invoicing_paypal_address.present?
+            %p
+              Paypal address for payment: #{@invoice.invoicing_paypal_address}
+        .col.s6.right-align
+          %h3 bill to
+          = format_text @commissioner.commissioner_invoicing_informations
+          - if @commissioner.billing_paypal_address.present?
+            %p
+              Paypal address: #{@commissioner.invoicing_paypal_address}
+
+
+      %hr{style: "margin-top: 8em;"}
+      %table
+        %thead
+          %tr
+            %th{data: { field: "id"} }
+              Date
+            %th{data: { field: "name"} }
+              Description
+            %th{data: { field: "price"} }
+              Price
+        %tbody>
+          %tr>
+            %td= (@invoice.created_at).strftime("%F")
+            %td>
+              %strong
+                - if @invoice.quotation.proposal.present?
+                  = t("artists.proposals.proposal.style", { category: @invoice.quotation.proposal.category.name, style: @invoice.quotation.proposal.style.name })
+                - else
+                  Custom commissions
+            %td= @invoice.price
+
+      %p{style: "margin-top: 4em;"}
+        Invoice date: #{Time.now.strftime("%F")}
+        %br
+        Due date: #{@invoice.due_date.strftime("%F")}
+
+      - if @invoice.additional_informations.present?
+        %blockquote{style: "margin-top: 4em;"}= format_text(@invoice.additional_informations)

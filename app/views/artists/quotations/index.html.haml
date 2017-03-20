@@ -1,0 +1,35 @@
+.with-floating-button
+  .white.wide-banner.hide-on-med-and-down.z-depth-1
+    .container
+      .row.row-no-bottom-margin
+        .col.s12.flex-align
+          = render partial: 'artists/quotations/filter_form'
+  .container
+    .row
+      - if current_user != @artist
+        .col.s12
+          .card.title-card.z-depth-05
+            .card-content
+              %h4.ellipsis.hide-on-med-and-down= raw t(".title", { artist_name: h(@artist.name) })
+
+      - if @quotations.any?
+        - @quotations.each do |quotation|
+          .col.s12.m6.l4
+            - if quotation.proposal.present?
+              = render partial: 'artists/quotations/with_proposal', locals: { quotation: quotation }
+            - else
+              = render partial: 'artists/quotations/without_proposal', locals: { quotation: quotation }
+
+      .col.s12
+        .card.pagination-card
+          .card-content.center-align
+            = paginate @quotations
+
+- if user_signed_in?
+  .fixed-action-btn.click-to-toggle.hide-on-large-only
+    %a.btn-floating.btn-large.modal-trigger{href: "#filter-modal"}
+      %i.material-icons filter_list
+
+  #filter-modal.modal.bottom-sheet.filter-modal
+    .modal-content
+      = render partial: 'artists/quotations/filter_form'

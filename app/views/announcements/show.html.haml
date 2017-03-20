@@ -1,0 +1,37 @@
+= cache [@announcement, current_user] do
+  .container
+    .row
+      .col.s12.l10.offset-l1
+        .card.announcement
+          .card-content
+            .row
+              .col.s12
+                = render partial: "announcements/text", locals: { announcement: @announcement }
+            %ul.collection.comments#comments
+              - if current_user.present?
+                %li.collection-item
+                  .row
+                    .col.m2.center-align.hide-on-small-only
+                      %img.responsive-img.circle{:alt => "", :src => "#{current_user.profile.avatar_url(:avatar)}"}
+                      %br
+                    .col.s12.m10
+                      = form_for(AnnouncementComment.new, url: announcement_comments_path(announcement_id: @announcement.id), method: :post) do |f|
+                        = f.hidden_field 'announcement_id', value: @announcement.id
+                        = f.hidden_field 'sender_id', value: current_user.id
+                        = f.text_area 'body', class: "materialize-textarea", placeholder: t('.send_comment')
+                        .right-align
+                          = f.button class: 'waves-effect waves-light btn-flat' do
+                            = t('.submit_comment')
+              - @comments.each do |comment|
+                %li.collection-item.conversation
+                  .row.row-no-bottom-margin
+                    .col.s3.m2.center-align
+                      = link_to profile_path(comment.sender) do
+                        %img.responsive-img.circle{:src => "#{comment.sender.profile.avatar_url(:avatar)}"}
+                      %br/
+                      %span.ago= t(".ago", { time: time_ago_in_words(comment.created_at) })
+                    .col.s9.m10
+                      %h5
+                        = link_to comment.sender.name, profile_path(comment.sender)
+                      %p
+                        = format_text(comment.body)

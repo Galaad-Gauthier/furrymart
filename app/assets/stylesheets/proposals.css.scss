@@ -1,0 +1,9 @@
+#proposals {
+  .card.card-link {
+    transition: top 0.2s;
+    top: 0;
+    &:hover {
+      top: -4px;
+    }
+  }
+}

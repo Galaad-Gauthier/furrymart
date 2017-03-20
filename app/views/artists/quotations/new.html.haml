@@ -1,0 +1,10 @@
+.container
+  .row
+    .col.s12.l10.offset-l1
+      = form_for(@quotation, url: artist_quotations_path(artist_id: @artist.slug)) do |f|
+        .card.quotation
+          .card-content
+            = render partial: 'artists/quotations/form', locals: { f: f }
+          .card-action.right-align
+            = f.button t('proposals.quotations.form.save_as_draft'), name: :draft, class: 'btn-flat waves-effect waves-light'
+            = f.button t('proposals.quotations.form.submit'), name: :publish, class: 'btn  z-depth-0 waves-effect waves-light'

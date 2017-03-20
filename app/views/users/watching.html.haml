@@ -1,0 +1,5 @@
+%ul.collection
+  - @watcheds.each do |watched|
+    %a.collection-item{href: profile_path(watched)}
+      = render partial: "shared/avatar", locals: { user: watched }
+      %span.title= watched.name

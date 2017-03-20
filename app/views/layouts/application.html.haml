@@ -1,0 +1,115 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    = csrf_meta_tags
+
+    = display_meta_tags site: FurryMart::Application.config.site_name, title: content_for(:page_title), reverse: true
+    = display_meta_tags description: content_for(:description) || t('meta.description')
+    - if content_for?(:author)
+      = display_meta_tags author: content_for(:author)
+    = display_meta_tags keywords: @keywords
+    = display_meta_tags og: { title: content_for(:page_title) || FurryMart::Application.config.site_name }
+    = display_meta_tags og: { image: content_for(:image) || image_url("og_default_image.png") }
+    = display_meta_tags og: { description: content_for(:description) || t('meta.description') }
+    = display_meta_tags og: { url: request.original_url }
+    = display_meta_tags og: { type: "website" }
+    = display_meta_tags twitter: { card: "summary" }
+    = display_meta_tags twitter: { site: "@furrymart" }
+    = display_meta_tags twitter: { title: content_for(:page_title) || FurryMart::Application.config.site_name }
+    = display_meta_tags twitter: { description: content_for(:description) || t('meta.description') }
+    = display_meta_tags twitter: { image: content_for(:image) || image_url("og_default_image.png") }
+    = display_meta_tags twitter: { image: { alt: content_for(:description) || t('meta.description') } }
+
+    %link{:href => opensearch_path, :rel => 'search', :title => "#{FurryMart::Application.config.site_name} search", :type => 'application/opensearchdescription+xml'}
+
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+    %meta{:name => "turbolinks-cache-control", :content => "no-cache"}
+
+    %meta{:name =>"theme-color", :content => "#263238"}
+    %meta{:name =>"msapplication-navbutton-color", :content => "#263238"}
+    %meta{:name =>"apple-mobile-web-app-status-bar-style", :content => "#263238"}
+
+    = javascript_include_tag 'application', "data-turbolinks-track" => true, 'data-turbolinks-eval' => false
+    = stylesheet_link_tag    'application', media: 'all'
+
+    - if Rails.env.playground?
+      = stylesheet_link_tag    'playground', media: 'all'
+
+    = favicon_link_tag "apple-icon-57x57.png", rel: "apple-touch-icon", sizes: "57x57"
+    = favicon_link_tag "apple-icon-60x60.png", rel: "apple-touch-icon", sizes: "60x60"
+    = favicon_link_tag "apple-icon-72x72.png", rel: "apple-touch-icon", sizes: "72x72"
+    = favicon_link_tag "apple-icon-76x76.png", rel: "apple-touch-icon", sizes: "76x76"
+    = favicon_link_tag "apple-icon-114x114.png", rel: "apple-touch-icon", sizes: "114x114"
+    = favicon_link_tag "apple-icon-120x120.png", rel: "apple-touch-icon", sizes: "120x120"
+    = favicon_link_tag "apple-icon-144x144.png", rel: "apple-touch-icon", sizes: "144x144"
+    = favicon_link_tag "apple-icon-152x152.png", rel: "apple-touch-icon", sizes: "152x152"
+    = favicon_link_tag "apple-icon-180x180.png", rel: "apple-touch-icon", sizes: "180x180"
+    = favicon_link_tag "android-icon-192x192.png", rel: "icon", type: "image/png", sizes: "192x192"
+    = favicon_link_tag "favicon-32x32.png", rel: "icon", type: "image/png", sizes: "32x32"
+    = favicon_link_tag "favicon-96x96.png", rel: "icon", type: "image/png", sizes: "96x96"
+    = favicon_link_tag "favicon-16x16.png", rel: "icon", type: "image/png", sizes: "16x16"
+
+    - if current_user.blank? || !current_user.show_adult_content?
+      :css
+        .nsfw {
+          background-image: url("#{image_path("nsfw.png")}") !important;
+        }
+
+  %body
+    %ul#slide-out.side-nav
+      = render partial: 'shared/navigation'
+    %header.navbar-fixed
+      %nav.z-depth-1
+        .nav-wrapper.blue-grey.darken-4
+          .row
+            .col.s12.flex-align
+              %a.brand-logo.hide-on-med-and-down{:href => "/"}
+                = FurryMart::Application.config.site_name
+              %a.button-collapse{"data-activates" => "slide-out", :href => "#"}
+                %i.material-icons menu
+
+              = form_tag(proposals_path, method: :get, id: "nav-search-wrapper", class: '') do
+                .input-field
+                  %input{ name: "q", type: "search", value: "#{params[:q]}", id: "nav-search-input", placeholder: t("proposals.search_form.search"), class: 'ellipsis hide-on-med-and-down'}/
+                  %input{ name: "q", type: "search", value: "#{params[:q]}", id: "nav-search-input", placeholder: t("proposals.search_form.search_furrymart"), class: 'ellipsis hide-on-large-only'}/
+                  %label{:for => "nav-search-input"}
+                    %i.material-icons.left search
+
+              %ul.hide-on-med-and-down{style: "flex-shrink: 0;"}
+                = render partial: 'shared/navigation'
+    - if notice || alert
+      :javascript
+        Materialize.toast("#{j(notice || alert)}", 4000);
+    %main
+      = content_for?(:page) ? yield(:page) : yield
+    %footer.page-footer.blue-grey.darken-4.hide-on-med-and-down.z-depth-4
+      .container
+        .row
+          = cache last_proposals do
+            .col.l4.s12
+              %h5.white-text= t('.last_proposals')
+              %ul
+                - last_proposals.each do |proposal|
+                  %li
+                    %a.grey-text.text-lighten-3{:href => "#{proposal_path(proposal)}"}= raw t('.proposal', { artist_name: h(proposal.artist.name), proposal_title: h(proposal.title) })
+          .col.l8.s12#feedback
+            = form_for(Feedback.new) do |f|
+              = f.hidden_field(:user_id, value: current_user.id) if user_signed_in?
+              = f.text_area :body, required: true, class: "materialize-textarea", placeholder: t('.feedback_body')
+              .right-align
+                = f.button t('.submit_feedback'), type: :submit, class: 'btn blue-grey darken-2 white-text'
+
+      .footer-copyright.blue-grey.darken-3
+        .container
+          © #{Date.today.year} #{FurryMart::Application.config.site_name}
+          #social-links
+            = link_to ENV["TWITTER_LINK"], target: "_blank", rel: "noopener" do
+              = image_tag "twitter_logo.png"
+          %ul#internal-links.right
+            - ['terms-of-service', 'acceptable-content-policy', 'about'].each do |page|
+              %li
+                = link_to t("pages.titles.#{page}"), page_path(page), class: "grey-text text-lighten-4"
+            - unless Rails.configuration.autologin
+              %li
+                = link_to t('.sign_out'), destroy_user_session_path, :method => :delete, class: "grey-text text-lighten-4"

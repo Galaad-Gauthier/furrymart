@@ -1,0 +1,13 @@
+.container
+  .row
+    .col.s12.l10.offset-l1
+      = form_for(@quotation, url: proposal_quotation_path(proposal_id: @proposal.slug, id: @quotation.id)) do |f|
+        .card.page-card.quotation
+          .card-content
+            = render partial: 'proposals/quotations/form', locals: { f: f }
+          .card-action.flex-align
+            = link_to proposal_quotation_path(proposal_id: @proposal.slug, id: @quotation.id), :class => 'btn-floating', :method => :delete, 'data-confirm' => t('.destroy_confirmation') do
+              %i.material-icons delete
+            %div
+              = f.button t('proposals.quotations.form.save_as_draft'), name: :draft, class: 'btn-flat waves-effect waves-light'
+              = f.button t('proposals.quotations.form.submit'), name: :publish, class: 'btn waves-effect waves-light z-depth-0'

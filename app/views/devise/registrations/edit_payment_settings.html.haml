@@ -1,0 +1,73 @@
+.container
+  .row
+    .col.s12.m12.l10.offset-l1
+      = form_for(@user, url: registration_path("user"), html: { method: :put }) do |f|
+        .card.page-card
+          .card-content
+            = devise_error_messages!
+
+            .row
+              .col.s12
+                %ul.tabs
+                  %li.tab.col.s12.m6
+                    = link_to t(".commissioner"), "#commissioner", class: 'active'
+                  %li.tab.col.s12.m6
+                    = link_to t(".artist"), "#artist"
+
+              #commissioner.col.s12
+                %blockquote.flow-text= t(".commissioner_infos").html_safe
+                .row
+                  .col.s12
+                    %h4= t('.base_commissioner')
+
+                  .col.s12
+                    .input-field.with-info
+                      = f.label :billing_paypal_address, t('.billing_paypal_address')
+                      = f.email_field :billing_paypal_address
+                      %span.input-info= t('.billing_paypal_address_help')
+
+                .row
+                  .col.s12
+                    %h4= t('.professional_commissioner')
+
+                  .col.s12
+                    .input-field.with-info
+                      = f.text_area :commissioner_invoicing_informations, class: "materialize-textarea", placeholder: t('.commissioner_invoicing_informations_placeholder')
+                      %span.input-info= t('.commissioner_invoicing_informations_help')
+
+              #artist.col.s12
+                %blockquote.flow-text= t(".artist_infos").html_safe
+                .row
+                  .col.s12
+                    %h4= t('.base_artist')
+
+                  .col.s12
+                    .input-field.with-info
+                      = f.label :invoicing_paypal_address, t('.invoicing_paypal_address')
+                      = f.email_field :invoicing_paypal_address
+                      %span.input-info= t('.invoicing_paypal_address_help')
+
+                    .input-field.checkbox-field
+                      = f.check_box :has_business_paypal
+                      = f.label :has_business_paypal, t(".has_business_paypal").html_safe
+
+                  .col.s12
+                    %h4= t('.professional_artist')
+
+                  .col.s12
+                    .input-field.with-info
+                      = f.text_area :artist_invoicing_informations, class: "materialize-textarea", placeholder: t('.artist_invoicing_informations_placeholder')
+                      %span.input-info= t('.artist_invoicing_informations_help')
+
+                    .input-field.with-info
+                      = f.label :company_id, t('.company_id')
+                      = f.text_field :company_id
+                      %span.input-info= t('.company_id_help')
+
+                    .input-field.with-info
+                      = f.label :vat_number, t('.vat_number')
+                      = f.text_field :vat_number
+                      %span.input-info= t('.vat_number_help')
+
+          .card-action.right-align
+            = f.button t('.submit'), class: 'waves-effect waves-light btn z-depth-0'

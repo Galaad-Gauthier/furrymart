@@ -1,0 +1,14 @@
+.container
+  .row
+    .col.s12.l10.offset-l1
+      .collection.page-collection.z-depth-1.with-header
+        .collection-header.center-align
+          = link_to notifications_mark_all_as_read_path, method: :put, class: 'btn-flat' do
+            %i.material-icons.right done_all
+            = t('.mark_all_as_read')
+        = render_activities(@activities)
+
+    .col.s12.l10.offset-l1
+      .card.pagination-card
+        .card-content.center-align
+          = paginate @activities

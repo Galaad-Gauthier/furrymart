@@ -1,0 +1,8 @@
+- if policy(Wish.new(user: user, proposal: proposal)).create?
+  %i.material-icons{data: { |
+    "role" => 'wish-trigger', |
+    "proposal-id" => proposal.id, |
+    "user-id" => user.try(:id), |
+    "wish-id" => wish_for(proposal).try(:id), |
+    "message-create" => t("users.wishes.create.success"), |
+    "message-destroy" => t("users.wishes.destroy.success") } }

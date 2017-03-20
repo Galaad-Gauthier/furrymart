@@ -1,0 +1,15 @@
+.card-action.flex-align
+  - if policy(quotation).publish_for_commissioner? || policy(quotation).unpublish_for_commissioner?
+    .visibility-switch{ data: { 'quotation-id' => quotation.id, 'role' => 'artist', 'checked-message': t('.order_public_feedback'), 'unchecked-message': t('.order_private_feedback') }}
+      %input.filled-in{type: "checkbox", id: "quotation-visibility-#{quotation.id}", checked: quotation.public_for_commissioner? }
+      %label{for: "quotation-visibility-#{quotation.id}"}= t(".is_public")
+
+  - else
+    %div
+  - if policy(quotation).edit?
+    - if quotation.proposal.present?
+      = link_to t('.edit'), edit_proposal_quotation_path(proposal_id: quotation.proposal.slug, id: quotation.id), class: 'blue-text darken-4'
+    - else
+      = link_to t('.edit'), edit_artist_quotation_path(artist_id: quotation.artist.slug, id: quotation.id), class: 'blue-text darken-4'
+  - else
+    = link_to t('.details'), quotation_path(id: quotation.id), class: 'blue-text darken-4'

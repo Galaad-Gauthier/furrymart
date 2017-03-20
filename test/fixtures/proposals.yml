@@ -1,0 +1,79 @@
+# == Schema Information
+#
+# Table name: proposals
+#
+#  artist_id             :integer
+#  banner                :string
+#  banner_id             :integer
+#  can_pay_what_you_want :boolean          default(FALSE)
+#  category_id           :integer
+#  created_at            :datetime         not null
+#  currency_uid          :string
+#  delay_id              :integer
+#  description           :text
+#  id                    :integer          not null, primary key
+#  is_deleted            :boolean          default(FALSE)
+#  price                 :integer
+#  slug                  :string
+#  style_id              :integer
+#  title                 :string
+#  tos                   :text
+#  updated_at            :datetime         not null
+#  usd_price             :float
+#  visible               :boolean          default(FALSE)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  price: 32
+  delay: delay_one
+  artist: artist
+  title: "proposal 1"
+  slug: "proposal-1"
+  usd_price: 1.5
+  currency_uid: "USD"
+  visible: true
+  category: artwork
+  style: digital_bw
+  banner: assets(:from_artist)
+
+two:
+  description: MyText
+  price: 32
+  delay: delay_one
+  artist: artist
+  title: "proposal 2"
+  slug: "proposal-2"
+  usd_price: 1.5
+  currency_uid: "EUR"
+  visible: true
+  category: artwork
+  style: digital_bw
+
+invisible:
+  description: MyText
+  price: 32
+  delay: delay_one
+  artist: artist
+  title: "proposal 3"
+  slug: "proposal-3"
+  currency_uid: "EUR"
+  usd_price: 1.5
+  visible: false
+  category: artwork
+  style: digital_bw
+
+by_other:
+  description: MyText
+  price: 32
+  delay: delay_one
+  artist: other
+  title: "proposal 4"
+  slug: "proposal-4"
+  currency_uid: "EUR"
+  usd_price: 1.5
+  visible: true
+  category: artwork
+  style: digital_bw

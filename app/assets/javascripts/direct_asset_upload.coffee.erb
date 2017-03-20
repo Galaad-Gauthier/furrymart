@@ -1,0 +1,49 @@
+aws_url = '<%= ENV["DIRECT_UPLOAD_S3_URL"] %>'
+bucket = '<%= ENV["DIRECT_UPLOAD_S3_BUCKET"] %>'
+
+evaporate = new Evaporate
+  awsSignatureVersion: '2'
+  signerUrl: '/s3/sign'
+  aws_key: '<%= ENV["DIRECT_UPLOAD_AWS_ACCESS_KEY_ID"] %>'
+  aws_url: aws_url
+  bucket: bucket
+
+$(document).on 'turbolinks:load', ->
+  $("*[data-asset-upload]").each (i, _elem) ->
+    elem = $(_elem)
+    elem.change (event) ->
+      files = event.target.files;
+
+      upload = (file) ->
+        extension = file.name.split('.').pop()
+        evaporate.add
+          name: "#{elem.data('owner')}/#{Math.floor(Date.now())}.#{extension}"
+          file: file
+          started: ->
+            Materialize.toast("Uploading #{file.name}", 3000)
+
+          complete: (_xhr, path) ->
+            fileUrl = aws_url + '/' + bucket + '/' + path
+            $.ajax
+              method: 'post'
+              url: elem.data("post-path")
+              data:
+                asset:
+                  user_id: elem.data('owner')
+                  s3_file_url: fileUrl
+                  description: file.name.replace(/\.[^/.]+$/, "").substring(0, 99)
+              success: ->
+                $(document).trigger("ajax:success")
+
+      buttons = $("label[for='new_assets'] .btn,.btn-floating")
+      buttons.addClass('disabled')
+
+      preloader = $(".assets-preloader")
+      preloader.addClass('active');
+
+      promises = []
+      promises.push(upload(file)) for file in files
+      Promise.all(promises).then ->
+
+        buttons.removeClass("disabled")
+        preloader.removeClass('active');

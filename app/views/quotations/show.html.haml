@@ -1,0 +1,148 @@
+- content_for :page_title do
+  - if @quotation.proposal.present?
+    = render partial: 'quotations/proposal_quotation_page_title', locals: { quotation: @quotation }
+  - else
+    = render partial: 'quotations/custom_quotation_page_title', locals: { quotation: @quotation }
+
+.container
+  .row
+    .col.s12.l10.offset-l1
+      .card.page-card-with-image
+
+        - if @quotation.proposal.present?
+          = render partial: 'quotations/proposal_quotation_card_title', locals: { quotation: @quotation }
+        - else
+          = render partial: 'quotations/custom_quotation_card_title', locals: { quotation: @quotation }
+
+        .card-content
+          - if @quotation.state == "done"
+            .row
+              .col.s12
+                - if @quotation.artist == current_user
+                  .rating
+                    %h5= raw t(".commissioner_rating.title", { commissioner_name: h(@quotation.commissioner.name) })
+                    %ul
+                      - Quotation::SENTIMENTS.each do |sentiment|
+                        %li
+                          = link_to quotation_rate_commissioner_path(@quotation, rating: sentiment), method: :put, class: (sentiment.to_s == @quotation.commissioner_rating && 'current') do
+                            %i.material-icons= "sentiment_#{sentiment}"
+                          .explanation
+                            = t(".commissioner_rating.values.#{sentiment}")
+
+                - elsif @quotation.commissioner == current_user
+                  .rating
+                    %h5= raw t(".artist_rating.title")
+                    %ul
+                      - Quotation::SENTIMENTS.each do |sentiment|
+                        %li
+                          = link_to quotation_rate_artist_path(@quotation, rating: sentiment), method: :put, class: (sentiment.to_s == @quotation.artist_rating && 'current') do
+                            %i.material-icons= "sentiment_#{sentiment}"
+                          .explanation
+                            = t(".artist_rating.values.#{sentiment}")
+          .row
+            .col.s12
+              %ul.collection.comments#comments
+                - if policy(QuotationComment.new(quotation: @quotation)).create?
+                  %li.collection-item
+                    .row
+                      .col.m2.center-align.hide-on-small-only
+                        %img.responsive-img.circle{:alt => "", :src => "#{current_user.profile.avatar_url(:avatar)}"}
+                        %br
+
+                      .col.s12.m10
+                        = form_for(QuotationComment.new, remote: true) do |f|
+                          = f.hidden_field 'quotation_id', value: @quotation.id
+                          = f.file_field 'attachment', multiple: true, data: { "attachment-upload" => true, "owner" => current_user.id }
+
+                          = f.text_area 'body', class: "materialize-textarea", placeholder: t('.send_comment')
+                          .files-to-upload
+
+                          .flex-align
+                            %div.quotation-attachments.attachment-wrapper
+                              - if policy(Invoice.new(quotation: @quotation)).create?
+                                = link_to '#invoicing-modal', class: "btn z-depth-0 waves-effect waves-light left hide-on-med-and-down" do
+                                  %i.material-icons.right attach_money
+                                  = t(".attach_invoice")
+
+                                = link_to '#invoicing-modal', class: "btn-floating z-depth-0 waves-effect waves-light left hide-on-large-only" do
+                                  %i.material-icons.right attach_money
+
+                              .attachment-upload.left
+                                .btn.z-depth-0.waves-effect.waves-light.hide-on-med-and-down{onclick: "$('#quotation_comment_attachment').click()"}
+                                  %i.material-icons.right attach_file
+                                  = t(".attach_files")
+                                .btn-floating.z-depth-0.waves-effect.waves-light.hide-on-large-only{onclick: "$('#quotation_comment_attachment').click()"}
+                                  %i.material-icons.right attach_file
+
+                                .preloader-wrapper.big.active
+                                  .spinner-layer.spinner-blue-only
+                                    .circle-clipper.left
+                                      .circle
+                                    .gap-patch
+                                      .circle
+                                    .circle-clipper.right
+                                      .circle
+                            = f.button class: 'waves-effect waves-light btn-flat' do
+                              = t('.submit_comment')
+
+                - @quotation.comments.each do |comment|
+                  %li.collection-item.conversation
+                    .row.row-no-bottom-margin
+                      .col.s3.m2.center-align
+                        = link_to profile_path(comment.sender) do
+                          %img.responsive-img.circle{:src => "#{comment.sender.profile.avatar_url(:avatar)}"}
+                        %br/
+                        %span.ago= t(".ago", { time: time_ago_in_words(comment.created_at) })
+                      .col.s9.m10
+                        = render partial: "quotations/comment", locals: { comment: comment }
+
+              .divider
+
+          %h4.top= t('.description')
+
+          %blockquote
+            %p= format_text(@quotation.description)
+          - if @quotation_assets.any?
+            %h4= t('.assets')
+            .row
+              - @quotation_assets.each do |asset|
+                .col.s12.m6.l4
+                  = render partial: 'shared/illustration', locals: { asset: asset }
+
+          - if @quotation.characters.any?
+
+            %h4.top= t('.characters', { count: @quotation.characters.count })
+
+            - @quotation.characters.each do |character|
+              .card.horizontal.character.z-depth-05
+                .card-image{:style => "background-image: url('#{character.illustration_for(current_user, :thumbnail)}')"}
+                .card-stacked
+                  .card-content
+                    %h4.ellipsis= link_to character.name, character
+                    = character.species
+                    %h5= t('.description')
+                    = format_text(truncate(character.description, { length: 200, separator: ' '}) { link_to " #{t('.read_more')}", character, class: 'blue-text darken-4' } )
+
+                  .card-action.right-align
+                    = link_to t('.character_details'), character, class: 'blue-text darken-4'
+
+        - if current_user == @quotation.artist && @quotation.state != 'done'
+          .card-action.right-align
+            - case @quotation.state
+            - when 'waiting_approval'
+              = link_to t("quotations.events.refuse"), '#refuse-modal', class: 'btn-flat red-text modal-trigger'
+              = button_to send("quotation_accept_path", quotation_id: @quotation.id), { method: :put, class: 'btn z-depth-0' } do
+                = t("quotations.events.accept")
+            - when 'waiting_payment'
+              = button_to t("quotations.events.cancel_approval"), send("quotation_cancel_approval_path", quotation_id: @quotation.id), { method: :put, class: 'btn-flat' }
+              = button_to t("quotations.events.paid"), send("quotation_paid_path", quotation_id: @quotation.id), { method: :put, class: 'btn z-depth-0' }
+            - when 'paid'
+              = button_to t("quotations.events.finish"), send("quotation_finish_path", quotation_id: @quotation.id), { method: :put, class: 'btn z-depth-0' }
+            - when 'refused'
+              = button_to t("quotations.events.cancel_approval"), send("quotation_cancel_approval_path", quotation_id: @quotation.id), { method: :put, class: 'btn-flat' }
+        - else
+          .empty-card-action
+= render partial: "quotations/refuse_modal", locals: { quotation: @quotation }
+
+- if policy(Invoice.new(quotation: @quotation)).create?
+  = render partial: "quotations/invoicing_modal", locals: { quotation: @quotation }

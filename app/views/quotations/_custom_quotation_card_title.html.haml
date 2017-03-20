@@ -1,0 +1,7 @@
+.card-image.card-cover.top-card-image{:style => "background-image: url('#{quotation.illustration_for(current_user, :banner)}')"}
+  %span.new.badge{"data-badge-caption" => "#{t("quotations.state.#{@quotation.state}")}"}
+  .card-title.card-title-onbright
+    - if @quotation.artist == current_user
+      = raw t('.artist_title', { commissioner_name: h(@quotation.commissioner.name), commissioner_path: profile_path(user_id: @quotation.commissioner) })
+    - else
+      = raw t('.commissioner_title', { artist_name: h(@quotation.artist.name), artist_path: profile_path(user_id: @quotation.artist) })

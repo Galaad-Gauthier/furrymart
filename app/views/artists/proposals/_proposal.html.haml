@@ -1,0 +1,24 @@
+.col.s12.m6.l4
+  .card.card-link.proposal{data: { "sorting-id": proposal.id }, itemscope: true, itemtype: "http://schema.org/Offer", itemid: proposal_url(proposal) }
+    = render partial: "proposals/meta", locals: { proposal: proposal }
+
+    .card-image.card-cover.top-card-image{:style => "background-image: url('#{proposal.illustration_for(current_user, :thumbnail)}')" }
+      = render partial: "proposals/wish_trigger", locals: { user: current_user, proposal: proposal }
+      - if proposal.category.present? && proposal.style.present?
+        %span.new.badge.style-badge{"data-badge-caption" => t(".style", { category: proposal.category.name, style: proposal.style.name })}
+      %a.fill{:href => proposal_path(id: proposal.slug)}
+    .card-content.ellipsis
+      .flex-align.flex-start
+        %a.artist-avatar{href: profile_path(user_id: proposal.artist.slug)}
+          = render partial: "shared/avatar", locals: { user: proposal.artist, with_status: true }
+        .ellipsis
+          %h4.title.ellipsis
+            = link_to proposal.title, proposal_path(id: proposal.slug)
+          %strong
+            = raw t(".by_artist", { artist_link: h(profile_path(user_id: proposal.artist.slug)), artist_name: h(proposal.artist.name) })
+      .row.row-no-bottom-margin
+        .col.s12.ellipsis
+          %h5.ellipsis= t('.delay')
+          = proposal.delay.try(:name)
+
+    = render partial: "proposals/actions", locals: { proposal: proposal }

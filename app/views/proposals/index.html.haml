@@ -1,0 +1,38 @@
+.white.wide-banner.z-depth-1
+  .container
+    = render partial: 'proposals/search_form'
+.container#proposals
+  .row
+    - if !user_signed_in?
+      = render partial: "notices/welcome"
+
+    - if Rails.env.playground?
+      = render partial: "notices/playground"
+
+    - if @proposals.empty?
+      .col.s12.page-notice
+        .card.notice-card
+          .card-content.flow-text
+            %p
+              = t(".your_search_terms")
+              –
+              - if params[:q].present?
+                %strong= params[:q]
+              - else
+                = raw t(".no_query")
+              - if params[:maximum_price].present?
+                = raw t(".maximum_price", { value: h(params[:maximum_price]) })
+              - if params[:minimum_price].present?
+                = raw t(".minimum_price", { value: h(params[:minimum_price]) })
+              - if params[:category].present?
+                = raw t(".category", { value: h(Category.find_by(key: params[:category]).name) })
+              - if params[:style].present?
+                = raw t(".style", { value: h(Style.find_by(key: params[:style]).name) })
+              –
+              = t(".dont_match")
+    - else
+      = render partial: "artists/proposals/proposal", collection: @proposals
+    .col.s12
+      .card.pagination-card
+        .card-content.center-align
+          = paginate @proposals

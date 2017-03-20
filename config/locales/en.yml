@@ -1,0 +1,745 @@
+en:
+  meta:
+    description: Take commissions, get notified and sell your art!
+  public_activity:
+    shared:
+      ago: '%{time} ago.'
+    news:
+      create:
+        title: Furry·Mart news!
+    invoice:
+      paid:
+        title: '<strong>%{commissioner_name}</strong> marked an invoice as paid.'
+      cancel_paid:
+        title: '<strong>%{commissioner_name}</strong> marked an invoice as not paid.'
+    question:
+      create:
+        title: '<strong>%{sender_name}</strong> asked you a question.'
+      update:
+        title: '<strong>%{recipient_name}</strong> answered your question.'
+    user:
+      follow:
+        title: '<strong>%{follower_name}</strong> is now watching you.'
+    proposal:
+      create:
+        title: '<strong>%{artist_name}</strong> created a new commission proposal.'
+      open:
+        title: '<strong>%{artist_name}</strong> has opened commissions.'
+    quotation:
+      publish:
+        title: '<strong>%{commissioner_name}</strong> would like a commission from you.'
+      accept:
+        title: "<strong>%{artist_name}</strong> accepted your order."
+      cancel_approval:
+        title: "<strong>%{artist_name}</strong> put your order back in the waiting list."
+      refuse:
+        title: "<strong>%{artist_name}</strong> declined your order."
+      paid:
+        title: "<strong>%{artist_name}</strong> marked your order as paid."
+      finish:
+        title: "<strong>%{artist_name}</strong> finished your commission."
+    quotation_comment:
+      create:
+        title_commissioner: '<strong>%{commissioner_name}</strong> posted a new comment on their order.'
+        title_artist: "<strong>%{artist_name}</strong> posted a new comment on your order."
+  pages:
+    titles:
+      about: About Furry·Mart
+      terms-of-service: Terms of service
+      acceptable-content-policy: Content policy
+  layouts:
+    application:
+      last_proposals: Last proposals
+      proposal: <strong>%{proposal_title}</strong> by %{artist_name}
+      feedback_body: Bugs and suggestions
+      submit_feedback: Submit
+      sign_out: Log out
+
+  sites:
+    furaffinity: Furaffinity
+    inkbunny: Inkbunny
+    weasyl: Weasyl
+    sofurry: SoFurry
+    twitter: Twitter
+    tumblr: Tumblr
+    deviantart: DeviantArt
+    patreon: Patreon
+    format:
+      furaffinity: 'Your FurAffinity username'
+      inkbunny: 'Your Inkbunny username'
+      weasyl: 'Your Weasyl username'
+      sofurry: 'Your SoFurry username'
+      twitter: 'Your Twitter username'
+      tumblr: 'Your Tumblr username'
+      deviantart: 'Your DeviantArt username'
+      patreon: 'Your Patreon id number'
+    url:
+      furaffinity: "https://furaffinity.net/user/%{username}"
+      inkbunny: "https://inkbunny.net/%{username}"
+      weasyl: "https://www.weasyl.com/~%{username}"
+      sofurry: "https://%{username}.sofurry.com"
+      twitter: "https://twitter.com/%{username}"
+      tumblr: "https://%{username}.tumblr.com"
+      deviantart: "https://%{username}.deviantart.com"
+      patreon: "https://www.patreon.com/user/creators?u=%{username}"
+  views:
+    pagination:
+      truncate: …
+  languages:
+    en: English
+    fr: French
+  shared:
+    navigation:
+      announcements: Blog
+      proposals: All proposals
+      my_quotations_as_commissioner: Orders
+      my_quotations_as_artist: Requests
+      gallery: My gallery
+      my_messages: Messages
+      sign_in: Login
+      sign_up: Sign up
+      sign_out: Sign out
+      no_notification: Notifications
+      unread_notifications:
+        one: New notification
+        other: '%{count} new notifications'
+    no_image:
+      no_assets: You don't have any illustration pictures
+      go_to_assets: You can add them on your <a href="/pictures" target="_blank">interface</a>.
+    illustration:
+      no_description: No description
+    illustration_picker:
+      no_description: No description
+    avatar:
+      admin: Furry·Mart team member
+      trusted: Trusted user
+      new: Standard user
+  announcements:
+    announcement:
+      comments:
+        zero: No comments
+        one: One comment
+        other: '%{count} comments'
+    show:
+      send_comment: Comment
+      submit_comment: Send
+      ago: '%{time} ago'
+  feedbacks:
+    create:
+      success: Your feedback has been successfully submitted, thanks :3
+  invoices:
+    paid:
+      success: Invoice marked as paid
+    cancel_paid:
+      success: Invoice marked as not paid
+  messages:
+    create:
+      success: Message sent
+    index:
+      ago: 'sent %{time} ago.'
+      message_placeholder: Your message here...
+      no_conversation: No conversations
+  users:
+    follow:
+      success: 'You are now watching %{user_name}'
+    unfollow:
+      success: 'You are not watching %{user_name} anymore'
+    profiles:
+      actions:
+        edit_user_profile: Edit profile
+        edit_payment_settings: Payment settings
+        edit_user_registration: Account settings
+        report: Report
+        ask_for_a_quote: Ask for a quote
+        ask_a_question: Ask a question
+        send_message: Send a message
+      question_modal:
+        modal_title: Ask a public question to <strong>%{user_name}</strong>
+        question_placeholder: Write your question here…
+        send_question: Send
+      report_modal:
+        modal_title: Report <strong>%{user_name}</strong> to Furry·Mart
+        question_placeholder: Tell us more about your problem with this user…
+        send_question: Send report
+
+      watches:
+        follow: Watch
+        unfollow: Unwatch
+        follow_tooltip: Get notified when this artist create a new commission proposal
+        unfollow_tooltip: Stop all notifications from this artist
+        watchers:
+          zero: Watched by <strong>0</strong>
+          one: Watched by <strong>1</strong>
+          other: 'Watched by <strong>%{count}</strong>'
+        watching:
+          zero: Watching <strong>0</strong>
+          one: Watching <strong>1</strong>
+          other: 'Watching <strong>%{count}</strong>'
+      profile:
+        no_biography: No biography
+        deleted_user: Deleted user
+        actions: Actions
+        biography: Biography
+        sites: External websites
+        public_gallery: Furrymart gallery
+      update:
+        success: Your profile was successfully updated
+      show:
+        meta:
+          description: "%{user_name}'s profile page"
+      assets:
+        title: "%{user_name}\'s <strong>pictures</strong>"
+        title_short: <strong>Pictures</strong>
+        more: See full gallery
+      characters:
+        title: "%{user_name}\'s <strong>characters</strong>"
+        title_short: <strong>Characters</strong>
+        add: Create a new character
+        characters_order_updated: Characters order successfully updated
+      questions:
+        title: <strong>Questions and answers</strong>
+        add: Ask a question
+      proposals:
+        title: "%{user_name}\'s <strong>proposals</strong>"
+        title_short: <strong>Proposals</strong>
+        add: Create a new proposal
+        proposals_order_updated: Proposals order successfully updated
+      wishes:
+        title: "%{user_name}\'s <strong>wish list</strong>"
+      edit:
+        biography: About me
+        picture_path: Set an avatar
+        submit: Update
+        verified: verified
+        not_verified: not verified
+        how_to_verify_site: How to verify my <strong>%{site}</strong> account?
+        why_verify:
+          Verifying your account is a security feature that let other users know that you really own the <strong>%{site}</strong> account linked with your username.
+          Once your account is verified you won't have anything more to do unless you change your username, in that case you will need to verify your account again.
+        close: Close
+    notifications:
+      index:
+        empty: No notification
+    reports:
+      create:
+        success: Your report was successfully submitted.
+    wishes:
+      create:
+        success: "Item added to your wish list"
+      destroy:
+        success: "Item removed from your wish list"
+    questions:
+      create:
+        success: Your question was successfully submitted.
+      update:
+        success: Your response was successfully submitted.
+      question:
+        title: 'Sent %{time} ago by <a href="%{sender_link}">%{sender_name}</a>'
+        modal_title: Your response to <strong>%{user_name}</strong>'s question
+        response_placeholder: Write your response here…
+        send_response: Send
+    assets:
+      create:
+        success: Picture successfully added
+      update:
+        success: Picture successfully updated
+      destroy:
+        success: Picture successfully deleted
+      form:
+        description: Description
+        update: Update your description
+        upload: Submit
+      index:
+        pictures_of: "<strong>%{username}</strong>'s pictures"
+        new: Add more pictures
+        import_from_furaffinity: Import from Furaffinity
+        import_pictures_from_furaffinity: Import pictures from <strong>Furaffinity</strong>
+        set_furaffinity_account: Set your Furaffinity account in your profile page in order to use the importer
+        start_importing: Start importing
+        are_assets_public: Public gallery
+        assets_visibility_public: Your gallery is now public
+        assets_visibility_hidden: Your gallery is now private
+      asset:
+        destroy: Delete
+        destroy_tooltip: This will not delete this picture from the existing commissions
+        destroy_confirmation: Are you sure you want to delete this picture?
+        asset_path: Browse
+        is_adult_content: NSFW
+        is_not_adult_content: SFW
+        empty: You don't have any illustration picture.
+        no_description: No description
+        edit: Edit
+        cancel_gravity: Cancel
+        save_gravity: Save position
+        is_adult_content: NSFW
+        nsfw_feedback: Picture set to "Not safe for work"
+        sfw_feedback: Picture set to "Safe for work"
+    characters:
+      state:
+        visible: Visible
+        invisible: Hidden
+      update:
+        success: Your character "%{character_name}" has been successfully updated
+      create:
+        success: Your character "%{character_name}" has been successfully created
+      destroy:
+        success: Your character "%{character_name}" has been deleted
+      navigation:
+        new: Create a new character
+      index:
+        new: Create a new character
+      character:
+        read_more: read more
+        details: See more
+        see_more: See more
+      owner_actions:
+        edit: Edit
+        is_public: Public
+        public_feedback: '<strong>%{character_name}</strong>&#8239; is now public'
+        private_feedback: '<strong>%{character_name}</strong>&#8239; is now private'
+      form:
+        name: Name
+        description: Description
+        description_placeholder: Full description of your character…
+        species: Species
+        add_assets: Pick some illustrations
+        no_description: No description
+        add_assets: Pick <img src="%{pick_image_url}" />  some illustrations and choose <img src="%{choose_image_url}" /> your banner
+      new:
+        title: Create a new character
+        submit: Create
+      edit:
+        title: Edit <strong>%{character_name}</strong>
+        submit: Update
+        destroy_tooltip: This will not delete this character from the existing commissions
+        destroy_confirmation: Are you sure you want to destroy this character?
+  artists:
+    proposals:
+      create:
+        success: Your proposal "%{proposal_title}" has been successfully created
+      update:
+        success: Your proposal "%{proposal_title}" has been successfully updated
+      destroy:
+        success: Your proposal "%{proposal_title}" was successfully deleted
+      state:
+        visible: Visible
+        invisible: Hidden
+      events:
+        activate: Activate
+        deactivate: Deactivate
+      proposal:
+        style: '%{category} / %{style}'
+        by_artist: By <a href="%{artist_link}">%{artist_name}</a>
+        price: Base price
+        delay: Time to completion
+        commissioner_details: Request a commission
+        can_pay_what_you_want: P·W·Y·W
+        artist_details: See more
+      index:
+        meta:
+          description: Commissions by %{artist_name}
+        new: Create a new proposal
+        empty: No proposals
+      new:
+        title: Create a new proposal
+        submit_invisible: Create
+        submit_visible: Create and activate
+      edit:
+        title: Edit <strong>%{proposal_title}</strong>
+        submit_invisible: Deactivate
+        submit_visible: Activate
+        submit: Update
+        destroy: Delete proposal
+        destroy_confirmation: Are you sure you want to delete this proposal?
+        destroy_tooltip: This will not delete the orders for this proposal
+      form:
+        general_informations: General informations
+        pricing: Pricing
+        conditions: Conditions
+        add_assets: Pick <img src="%{pick_image_url}" />  some illustrations and choose <img src="%{choose_image_url}" /> your banner
+        title: Title
+        description: Description
+        description_placeholder: Full description of your commission proposal…
+        tos: T·O·S
+        tos_placeholder: Full conditions about delay, payment, WIP approval, etc…
+        pay_what_you_want: Pay what you want
+        fixed_base_price: Fixed base price
+        tags: Tags, separated by commas
+        price: Base price
+        delay: Time to completion
+        tag_list: Tags
+        con_list: Your “Won't do” list
+        style: Style
+    quotations:
+      publish:
+        success: Your quote request has been sent to the artist for approval
+      create:
+        success: Your quote request was saved as draft
+      index:
+        empty: "You don't have any request with the state: <strong>%{state}</strong>."
+      with_proposal:
+        price: Base price
+        delay: Time to completion
+        commissioner_title: '<strong>%{proposal_title}</strong> for %{commissioner_name}'
+      without_proposal:
+        price: Base price
+        delay: Time to completion
+        commissioner_title: '%{commissioner_name}'
+        custom_quote: Custom quote
+      edit:
+        description: Description
+        add_assets: Pick some illustrations
+        submit: Update
+        destroy_confirmation: Are you sure you want to delete your draft?
+      index:
+        title: "%{artist_name}'s <strong>requests</strong>"
+      form:
+        title: "Ask <strong>%{artist_name}</strong> for a quote"
+        disclaimer:
+          Remember that artists do not always accept custom commissions, so do not hesitate to write
+          a short description of what you would like and add more details after both the artist and yourself
+          agreed on all the conditions.
+        body: Your message here…
+  proposals:
+    deactivate:
+      success: Your proposal "%{proposal_title}" has been deactivated
+    activate:
+      success: Your proposal "%{proposal_title}" has been activated
+    artist_actions:
+      duplicate: Duplicate
+      edit: Edit
+      destroy_confirmation: Are you sure you want to destroy this proposal?
+      open_for_commission: Open
+      open_feedback: Commissions opened
+      close_feedback: Commissions closed
+    commissioner_actions:
+      details: See more
+      can_pay_what_you_want: Pay what you want
+      add_to_wishlist: Add to your wishlist
+      remove_from_wishlist: Remove from your wishlist
+    index:
+      your_search_terms: Your search terms
+      dont_match: don't match any commission proposal.
+      no_query: <strong>everything</strong>
+      maximum_price: with <strong>maximum price of $%{value}</strong>
+      minimum_price: with <strong>minimum price of $%{value}</strong>
+      category: in category "<strong>%{value}</strong>"
+      style: with style "<strong>%{value}</strong>"
+      close_notice: Close
+    search_form:
+      search: Search
+      search_furrymart: Search on Furry·Mart
+      results_count:
+        zero: No results
+        one: One result
+        other: '%{count} results'
+      maximum_price: Maximum price (USD)
+      minimum_price: Minimum price (USD)
+      style: Style
+      time_to_completion: Time to completion
+      search_submit: Search
+      sorting: Sort by
+      sort_fields:
+        relevance: Relevance
+        created_at_desc: Newest first
+        created_at_asc: Oldest first
+        price_asc: Lowest price first
+        price_desc: Highest price first
+      all: All
+      any: Any
+    show:
+      meta:
+        description: '%{title} commissions by %{artist_name} for %{price}'
+      page_title: '%{title} by %{artist_name}'
+      title: '<strong>%{title}</strong> by <a href="%{artist_path}">%{artist_name}</a>'
+      description: Description
+      tos: T·O·S
+      can_pay_what_you_want: P·W·Y·W
+      tags: Tags
+      wont_do: “Won't do” list
+      price: Base price
+      delay: Time to completion
+      assets: Sample pictures
+      commission: Request a commission
+      edit: Edit
+      not_open: Commissions are closed
+      destroy: Delete proposal
+      not_invoiceable: This artist is not a professional and can't issue invoices.
+      is_invoiceable: This artist is a professional and can issue invoices including their company identification details and tax ID.
+    quotations:
+      publish:
+        success: Your order has been sent to the artist for approval
+      edit:
+        destroy_confirmation: Are you sure you want to delete your draft?
+      create:
+        success: Your request was saved as draft
+      form:
+        title: Request a commission to <strong>%{artist_name}</strong>
+        description: Full description of you request…
+        characters: Characters
+        add_assets: Pick some additional illustrations
+        add_characters: Select the characters you want to include
+        save_as_draft: Keep as draft
+        no_description: No description
+        submit: Send your request
+  commissioners:
+    quotations:
+      update:
+        success: Your order was successfully updated
+      index:
+        empty: "You don't have any order with the state: <strong>%{state}</strong>."
+      with_proposal:
+        price: Base price
+        delay: Time to completion
+        commissioner_title: '<strong>%{proposal_title}</strong> by %{artist_name}'
+      without_proposal:
+        price: Base price
+        delay: Time to completion
+        commissioner_title: '%{artist_name}'
+        custom_quote: Custom quote
+      edit:
+        title: Commission from %{artist_name} to %{commissioner_name}
+        description: Description
+        add_assets: Pick some illustrations
+        submit: Update
+      index:
+        title: "%{commissioner_name}'s <strong>orders</strong>"
+  quotations:
+    accept:
+      success: Order accepted
+    refuse:
+      success: Order declined
+    cancel_approval:
+      success: Order waiting approval
+    paid:
+      success: Order marked as paid
+    finish:
+      success: Order finished
+    destroy:
+      success: Draft deleted
+    rate_commissioner:
+      success: Thanks for your feedback
+    rate_artist:
+      success: Thanks for your feedback
+    state:
+      all: All
+      draft: Draft
+      waiting_approval: Awaiting approval
+      waiting_payment: Awaiting payment
+      paid: Order paid
+      refused: Order declined
+      done: Order finished
+    states:
+      all: All orders
+      draft: Draft
+      waiting_approval: Awaiting approval
+      waiting_payment: Awaiting payment
+      paid: Paid
+      refused: Declined
+      done: Finished
+    events:
+      accept: Accept
+      paid: Mark as paid
+      cancel_approval: Put back in waiting state
+      finish: Mark as finished
+      refuse: Decline
+    proposal_quotation_page_title:
+      commissioner_page_title: '%{title} by %{artist_name}'
+      artist_page_title: '%{title} for %{commissioner_name}'
+    proposal_quotation_card_title:
+      artist_title: '<a href="%{proposal_path}"><strong>%{proposal_title}</strong></a> for <a href="%{commissioner_path}">%{commissioner_name}</a>'
+      commissioner_title: '<a href="%{proposal_path}"><strong>%{proposal_title}</strong></a> by <a href="%{artist_path}">%{artist_name}</a>'
+    custom_quotation_page_title:
+      commissioner_page_title: 'Custom quote request to %{artist_name}'
+      artist_page_title: 'Custom quote for %{commissioner_name}'
+    custom_quotation_card_title:
+      artist_title: '<strong>Custom quote</strong> for <a href="%{commissioner_path}">%{commissioner_name}</a>'
+      commissioner_title: '<strong>Custom quote request</strong> to <a href="%{artist_path}">%{artist_name}</a>'
+    refuse_modal:
+      modal_title: Refuse this commission
+      comment: Feel free to explain why you don't want to take this commission...
+      submit: Confirm
+    invoicing_modal:
+      success: Invoice attached
+      modal_title: Attach an invoice
+      invoice_reference: Invoice reference
+      invoice_reference_placeholder: "fm-%{id}"
+      price: Price
+      due_date: Due date
+      currency_uid: Currency
+      invoicing_informations: Invoicing informations
+      invoicing_informations_placeholder: Please include the name and address of your company if you have one.
+      invoicing_informations_help: You can set those informations for all orders in your <a href="/users/edit" target="_blank">settings page</a>.
+      company_id: Company ID
+      company_id_help: Keep this field empty if you are not a professional.
+      invoicing_paypal_address: Paypal email address or paypal.me link
+      vat_number: VAT number
+      vat_number_help: Keep this field empty if you are not registered for VAT.
+      additional_informations: Additional informations or comments
+      submit: Submit
+    invoice:
+      invoice: Invoice %{reference}
+      price: Price
+      due_date: Due date
+      currency_uid: Currency
+      invoicing_paypal_address: Paypal address for payment
+      billing_paypal_address: Paypal address of the commissioner
+      download_full_invoice: Download full invoice
+      mark_as_paid: Mark as paid
+      go_to_paypal: Go to Paypal
+      cancel_paid: Mark as not paid
+      pay_on_paypal: 'Pay on paypal with address: %{address}'
+    artist_actions:
+      details: See more
+      is_public: Public
+      request_public_feedback: Request added to your public list
+      request_private_feedback: Request removed from your public list
+    commissioner_actions:
+      details: See more
+      edit: Edit
+      is_public: Public
+      order_public_feedback: Order added to your public list
+      order_private_feedback: Order removed from your public list
+
+    show:
+      edit: Edit
+      description: Description
+      assets: Sample pictures
+      attachment: Attach a picture
+      send_comment: Comment
+      submit_comment: Send
+      ago: '%{time} ago'
+      download: Download full image
+      read_more: read more
+      attach_files: Attach files
+      attach_invoice: Attach invoice
+      characters:
+        one: Character
+        other: Characters
+      character_details: See more
+      commissioner_rating:
+        title:
+          Would you work for <strong>%{commissioner_name}</strong> again if you had the occasion?
+        values:
+          very_dissatisfied: “Never, I had a horrible experience with this commissioner.”
+          dissatisfied: “I don't think so, I had a poor experience with this commissioner.”
+          neutral: “Maybe, I don't really care.”
+          satisfied: “Yes of course, everything went great!”
+          very_satisfied: “I hope so, this commissioner was awesome!”
+      artist_rating:
+        title:
+          Would you recommend this artist to a friend?
+        values:
+          very_dissatisfied: “Never, I had a horrible experience with this artist.”
+          dissatisfied: “I don't think so, I had a poor experience with this artist.”
+          neutral: “Only if my friend ask me about this artist.”
+          satisfied: “Absolutely, everything went great!”
+          very_satisfied: “Of course yes, this artist is awesome!”
+  characters:
+    index:
+      search: Search a character
+      search_submit: Search
+      details: See more
+      edit: Edit
+      mine: My characters
+    show:
+      meta:
+        description: '%{character_species} fursona named %{character_name}'
+      page_title: '%{character_name}'
+  devise:
+    sessions:
+      new:
+        sign_in_with_twitter: Sign in with Twitter
+        email: Email address
+        password: Password
+        remember_me: Remember me?
+        submit: Login
+        forgot_your_password: Forgot your password?
+        sign_up: Sign up
+    registrations:
+      new:
+        sign_in_with_twitter: Sign up with Twitter
+        name: Username
+        email: Email address
+        password: Password
+        password_confirmation: Password confirmation
+        show_adult_content: See adult content (you must be 18 or older)
+        language: Language
+        submit: Sign up
+        sign_in: Already registered
+      edit_payment_settings:
+        commissioner: Commissioners
+        artist: Artists
+        base_commissioner: Common billing informations
+        professional_commissioner: Professional billing informations
+        base_artist: Common invoicing informations
+        professional_artist: Professional invoicing informations
+        billing_paypal_address: Paypal email address
+        billing_paypal_address_help: This is the address you use to pay for commissions.
+        invoicing_paypal_address: Paypal email address or paypal.me link
+        invoicing_paypal_address_help: This is the address you use to get paid for your work.
+        has_business_paypal: My Paypal account is a <a href="https://www.paypal.com/al/webapps/mpp/merchant"  target="_blank" rel="noopener">Paypal Business account</a>.
+        company_id: Company ID
+        company_id_help: Keep this field empty if you are not a professional.
+        vat_number: VAT number
+        vat_number_help: Keep this field empty if you are not registered for VAT.
+        commissioner_invoicing_informations_placeholder: Please include your name and address or the name and address of your company.
+        commissioner_invoicing_informations_help: Those informations are private and will only be visible to commissioned artists and builders.
+        artist_invoicing_informations_placeholder: Please include the name and addres of your company if you have one.
+        artist_invoicing_informations_help: Those informations are private and will only be visible to commissioners.
+        submit: Update
+        commissioner_infos:
+          <strong>Furry·Mart</strong> is open to regular and professional commissioners. In both cases you will be presented with
+          <strong>all the necessary payment informations</strong> from artists and builders. To make the whole process easier <strong>you should fill
+          your billing informations</strong> so the artist or builder you commissioned can <strong>keep track of your order and invoicing status</strong>.
+        artist_infos:
+          On <strong>Furry·Mart</strong> artists and builders keep complete control of the payment process, <strong>you are free to use any payment and
+          invoicing methods</strong>. However we offer ways to make the whole process easier <strong>by letting you fill all the necessary
+          informations beforehand</strong>.<br />
+          Commissioners will be presented with your payment informations, Paypal email address,
+          <a href="https://paypal.me" target="_blank" rel="noopener">paypal.me</a> link or an automated payment button if you have a
+          <a href="https://www.paypal.com/al/webapps/mpp/merchant"  target="_blank" rel="noopener">Paypal Business account</a>.
+      edit:
+        email_notifications: Email notifications
+        name: Username
+        email: Email address
+        password: Password
+        password_confirmation: Password confirmation
+        current_password: Current password
+        language: Language
+        show_adult_content: See adult content (you must be 18 or older)
+        password_change_instruction: Keep this field empty if you don't want to change your password.
+        submit: Update
+        allow_informations: When we want to send you important news regarding Furry·Mart's services.
+        allow_message_created_notification: When someone sends you a private message.
+        allow_quotation_created_notification: When a commissioner wants to request a commission.
+        allow_quotation_accepted_notification: When an artist accepts your commission request.
+        allow_quotation_refused_notification: When an artist declines your commission request.
+        allow_quotation_cancelled_notification: When an artist cancels your commission request.
+        allow_quotation_paid_notification: When one of your order is marked as paid.
+        allow_quotation_done_notification: When an artist finishes one your commission.
+        allow_quotation_remind_waiting_approval_notification: When one of your commission request is still waiting your approval.
+        allow_artist_quotation_comment_created_notification: When an artist leaves a comment on one of your order.
+        allow_commissioner_quotation_comment_created_notification: When a commissioner leaves a comment on one of their order.
+        allow_proposal_created_notification: When an artist you watch creates a new proposal.
+        allow_proposal_opened_notification: When a proposal in your wishlist is open.
+        allow_follow_notification: When a user watches you.
+        allow_question_created_notification: When an user asks you a question.
+        allow_question_answered_notification: When an user answers your question.
+        allow_quotation_invoice_paid_notification: When an user mark one of your invoice as paid.
+        allow_quotation_invoice_cancel_paid_notification: When an user mark one of your invoice as not paid.
+        destroy: Delete your account
+        destroy_reminder:
+          Before deleting your account, please make sure to leave alternative contact informations to your
+          customers or to the artists you commissioned.
+        destroy_goodbye: 'All you have to do now is confirm your deletion. We are sad to see you go :c'
+        artists: Ongoing ordered commissions
+        commissioners: Ongoing requested commissions
+        destroy_confirmation: Delete my account now
+    passwords:
+      new:
+        email: Email address
+        submit: Request a new password
+    shared:
+      links:
+        didnt_receive_confirmation_instructions: You didn't receive confirmation instructions?

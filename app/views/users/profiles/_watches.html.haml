@@ -1,0 +1,19 @@
+.watches
+  - if user.followers_count > 0
+    = link_to t(".watchers", { count: user.followers_count }).html_safe, "#watchers-modal", class: 'btn-flat modal-trigger black-text watchers-modal-trigger', data: { artist_id: user.slug }
+  - else
+    = link_to t(".watchers", { count: user.followers_count }).html_safe, "#", class: 'btn-flat disabled'
+  - if user.follow_count > 0
+    = link_to t(".watching", { count: user.follow_count }).html_safe, "#watching-modal", class: 'btn-flat modal-trigger black-text watching-modal-trigger', data: { artist_id: user.slug }
+  - else
+    = link_to t(".watching", { count: user.follow_count }).html_safe, "#", class: 'btn-flat disabled'
+
+  - if !is_owner
+    - if current_user && user.followed_by?(current_user)
+      = link_to user_unfollow_path(user_id: user.slug), :class => 'btn z-depth-0 tooltipped red', :method => :put, "data-position" => "bottom", "data-delay" => "0", "data-tooltip" => t('.unfollow_tooltip', { artist_name: user.name }) do
+        %i.material-icons.right.hide-on-med-and-down remove
+        = t('.unfollow')
+    - else
+      = link_to user_follow_path(user_id: user.slug), :class => 'btn  z-depth-0 tooltipped', :method => :put, "data-position" => "bottom", "data-delay" => "0", "data-tooltip" => t('.follow_tooltip', { artist_name: user.name }) do
+        %i.material-icons.right.hide-on-med-and-down add
+        = t('.follow')

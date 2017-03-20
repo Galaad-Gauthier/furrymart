@@ -1,0 +1,11 @@
+.card-action.center-align.no-padding
+  - if proposal.visible?
+    = link_to proposal_path(id: proposal.slug), class: 'btn btn-full waves-effect waves-light' do
+      - if proposal.can_pay_what_you_want?
+        = t('.can_pay_what_you_want')
+      - else
+        %span.approximated-usd-price= proposal.formatted_usd_price
+  - else
+    =  button_tag class: 'btn btn-full waves-effect waves-light ellipsis', data: { "role" => 'wish-trigger', "proposal-id" => proposal.id, "user-id" => current_user.try(:id), "wish-id" => wish_for(proposal).try(:id), "message-create" => t("users.wishes.create.success"), "message-destroy" => t("users.wishes.destroy.success"), "content-add" => t(".add_to_wishlist"), "content-remove" => t(".remove_from_wishlist") } do
+      = wish_for(proposal).present? ? t(".remove_from_wishlist") : t(".add_to_wishlist")
+

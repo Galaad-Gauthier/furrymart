@@ -1,0 +1,48 @@
+# == Schema Information
+#
+# Table name: quotations
+#
+#  artist_id           :integer
+#  artist_rating       :string
+#  commissioner_id     :integer
+#  commissioner_rating :string
+#  created_at          :datetime         not null
+#  description         :text
+#  id                  :integer          not null, primary key
+#  proposal_id         :integer
+#  refuse_comment      :string
+#  refuse_reason       :string
+#  state               :string
+#  tos_accepted        :boolean          default(FALSE)
+#  updated_at          :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  proposal: one
+  commissioner: commissioner
+  artist: artist
+  description: description
+  state: waiting_approval
+  tos_accepted: true
+
+draft:
+  proposal: one
+  commissioner: commissioner
+  artist: artist
+  description: description
+  state: draft
+  tos_accepted: true
+
+other:
+  proposal: by_other
+  commissioner: commissioner
+  artist: other
+  description: description
+  state: waiting_approval
+  tos_accepted: true

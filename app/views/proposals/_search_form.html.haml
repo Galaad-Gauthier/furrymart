@@ -1,0 +1,56 @@
+#search-form
+  %span#results-count
+    = t(".results_count", { count: @proposals.total_count })
+  #search-form-options{"data-turbolinks-permanent" => true}
+    %ul.collapsible{"data-collapsible": "accordion"}
+      %li
+        .collapsible-header{class: (([:category, :style, :delay, :minimum_price, :maximum_price].any? { |field| params[field].present? } || (params[:sort_by].present? && params[:sort_by] != 'created_at_desc')) && 'active')}
+          %span.blue-text#search-options-toggle
+            %i.material-icons.left.expand-more expand_more
+            %i.material-icons.left.expand-less expand_less
+
+        .collapsible-body
+          .row.row-no-bottom-margin
+            .col.s12.l4
+              .input-field
+                = select_tag :category, options_from_collection_for_select(Category.all, :key, :name, params[:category]), include_blank: t(".all"), form: 'nav-search-wrapper', onchange: "document.getElementById('style').value = undefined; $(this.form).submit()"
+                %label{:for => "category"}= t('.category')
+
+            - Category.includes(:styles).each do |category|
+              .col.s12.l4{"data-category" => category.key}
+                .input-field
+                  - if category.key != 'other'
+                    = select_tag :style, options_from_collection_for_select(category.styles, :key, :name, params[:style]), include_blank: t(".all"), onchange: "$(this.form).submit()"
+                  - else
+                    = select_tag :style, options_from_collection_for_select(Style.none, :key, :name, params[:style]), include_blank: t(".all"), disabled: true
+                  %label{:for => "style"}= t('.style')
+
+            .col.s12.l4{"data-category" => "all"}
+              .input-field
+                = select_tag :style, options_from_collection_for_select(Style.none, :key, :name, params[:style]), include_blank: t(".all"), disabled: true
+                %label{:for => "style"}= t('.style')
+
+            .col.s12.l4
+              .input-field
+                = select_tag :delay, options_from_collection_for_select(Delay.all, :rank, :name, params[:delay]), include_blank: t(".any"), form: 'nav-search-wrapper', onchange: "$(this.form).submit()"
+                %label{:for => "delay"}= t('.time_to_completion')
+
+            .col.s12.l4
+              .input-field
+                %input.validate.black-text{ id: "minimum_price", name: "minimum_price", type: "number", value: "#{params[:minimum_price]}", min: "0", form: 'nav-search-wrapper' }/
+                %label{:for => "minimum_price"}= t('.minimum_price')
+
+            .col.s12.l4
+              .input-field
+                %input.validate.black-text{ id: "maximum_price", name: "maximum_price", type: "number", value: "#{params[:maximum_price]}", min: "0", form: 'nav-search-wrapper' }/
+                %label{:for => "maximum_price"}= t('.maximum_price')
+
+            .col.s12.l4
+              .input-field
+                = select_tag :sort_by, options_for_select(t(".sort_fields").map { |k, v| [ v, k ] }, params[:sort_by]), form: 'nav-search-wrapper', onchange: "$(this.form).submit()"
+                %label{:for => "sort_by"}= t('.sorting')
+
+            .col.s12.right-align
+              = button_tag class: 'btn waves-effect waves-light z-depth-0', form: 'nav-search-wrapper' do
+                %i.material-icons.left search
+                = t('.search_submit')

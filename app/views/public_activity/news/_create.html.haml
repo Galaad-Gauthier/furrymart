@@ -1,0 +1,9 @@
+.collection-item.avatar{href: proposal_path(activity.trackable)}
+  = image_tag "avatars/marty.png", class: "circle response-img avatar", alt: t(".title")
+  %span.title
+    %strong= raw t('.title')
+  = format_text(activity.trackable.body)
+  %p.date= t("public_activity.shared.ago", { time: time_ago_in_words(activity.created_at) })
+  - if !current_user.have_read?(activity)
+    %span.secondary-content
+      %i.material-icons new_releases

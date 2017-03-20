@@ -1,0 +1,4 @@
+.container
+  .row
+    = render partial: "announcements/announcement", collection: @announcements, cache: Proc.new { |announcement| [announcement] }
+    = paginate @announcements

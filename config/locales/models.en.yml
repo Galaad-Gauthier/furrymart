@@ -1,0 +1,97 @@
+en:
+
+  activerecord:
+
+    models:
+      character: Character
+      picture: Picture
+      profile: Profile
+      proposal: Proposal
+      quotation_comment: Quotation comment
+
+    attributes:
+      character:
+        name: Name
+        species: Species
+        description: Description
+        is_deleted: Deleted
+        banner: Banner
+
+      picture:
+        description: Description
+        is_adult_content: NSFW
+
+      profile:
+        biography: About me
+        sites: Sites
+
+      delay:
+        values:
+          shortly: "Shortly after payment"
+          see_description: "See description / T-O-S"
+          three_days: "3 days at most"
+          one_week: "One week at most"
+          two_weeks: "2 weeks at most"
+          one_month: "One month at most"
+          two_months: "2 months at most"
+          more_than_two_months: "More than 2 months"
+
+      style:
+        values:
+          digital_bw: "Digital (B&W)"
+          digital_colored: "Digital (colored)"
+          traditional_bw: "Traditional (B&W)"
+          traditional_colored: "Traditional (colored)"
+          vectorial: "Vectorial"
+          3D_art: "3D art"
+          cellshading: "Cellshading"
+          pixel_art: "Pixel art"
+          animated: "Animated"
+          fursuit: "Fursuit"
+          comics: "Comic"
+          badges: "Badge"
+          other: "Other"
+          fursuit_part: "Fursuit part"
+          full_fursuit: "Full suit"
+          partial_fursuit: "Partial suit"
+          toony: "Toony"
+          realistic: "Realistic"
+          accessory: "Accessories"
+
+      category:
+        values:
+          artwork: "Artwork"
+          badge: "Badge"
+          fursuit: "Fursuit"
+          ych: "YCH"
+          refsheet: "Reference sheet"
+          stickers: "Sticker"
+          icons: "Icon"
+          comics: "Comics"
+          adoptable: "Adoptable"
+          goodies: "Goodies"
+          other: "Other"
+
+      proposal:
+        delay: Time to completion
+        banner: Banner
+        can_pay_what_you_want: PWYW
+        description: Description
+        is_deleted: Deleted
+        title: Title
+        tos: Terms of Service (ToS)
+        visible: Visible
+        price: Price
+        currency_uid: Currency
+        currency: Currency
+
+      refuse_reason:
+        values:
+          not_enough_time: "I don't have enough time"
+          no_more_slots: "All slots are taken"
+          dont_like: "I don't feel comfortable with the theme, characters or requirements"
+          other: "Other reasons"
+
+      quotation_comment:
+        body: Comment
+        attachment: Attachment

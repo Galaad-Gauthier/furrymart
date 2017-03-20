@@ -1,0 +1,8 @@
+.text
+  .row
+    .col.s12
+      %h1= announcement.title
+      .flow-text
+        = raw render_markdown(announcement.body)
+  .right-align
+    %strong= announcement.author

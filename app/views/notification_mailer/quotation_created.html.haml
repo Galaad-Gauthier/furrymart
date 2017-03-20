@@ -1,0 +1,22 @@
+.mui--text-body1
+  -if @quotation.proposal.present?
+    = raw t('.body', {                                                                         |
+          commissioner_link: h(profile_url(user_id: @quotation.commissioner.slug)), |
+          commissioner_name: h(@quotation.commissioner.name),                                  |
+          proposal_link: h(proposal_url(@quotation.proposal)),                                 |
+          proposal_title: h(@quotation.proposal.title)                                         |
+      })                                                                                       |
+%br/
+.mui--text-category= t('quotations.show.description')
+%table{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
+  %tr
+    %td.mui-citation
+      = format_text(@quotation.description)
+%br
+%hr
+
+.mui--text-body1
+  = raw t('.infos', { artist_profile_page: profile_url(user_id: @quotation.artist.slug) })
+
+.mui--text-center.mui-link
+  %a.mui-btn.mui-btn--primary{:href => "#{quotation_url(@quotation)}", :target => "_blank"}= t('.show_quotation')

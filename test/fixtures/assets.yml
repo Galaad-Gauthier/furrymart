@@ -1,0 +1,18 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+from_artist:
+  user: artist
+  s3_file_url: "url"
+  description: "original"
+
+from_commissioner:
+  user: commissioner
+  s3_file_url: "url"
+
+from_other:
+  user: other
+  s3_file_url: "url"

@@ -1,0 +1,46 @@
+.col.s12.m6.l4{id: "asset-#{asset.id}"}
+  .card.asset
+    .card-image.card-cover.top-card-image{ style: "background-image: url('#{asset.file_url(:thumbnail)}')" }
+      - if can_update
+        = link_to "#set-gravity-modal-#{asset.id}", class: 'btn-floating white modal-trigger' do
+          %i.material-icons.grey-text.text-darken-4 center_focus_strong
+      .card-title.card-title-onbright.center-align.asset-description.ellipsis.flex-align
+        %em.ellipsis= (asset.description.present? ? asset.description : t('.no_description'))
+        - if can_update
+          = link_to "#edit-asset-modal-#{asset.id}", :class => 'white-text modal-trigger' do
+            %i.material-icons edit
+
+      - 5.times do
+        %img.materialboxed{ src: asset.file_url, data: { caption: (asset.description.present? ? asset.description : t('.no_description'))}}
+
+    - if can_update
+      .card-action.flex-align
+        = link_to [asset.user, asset.becomes(Asset)], :class => 'tooltipped btn-floating', "data-position" => "bottom", "data-delay" => "0", "data-tooltip" => t('.destroy_tooltip'), :method => :delete, :remote => true, "data-confirm" => t('.destroy_confirmation') do
+          %i.material-icons delete
+
+        .div
+          .visibility-switch{ data: { 'asset-url' => user_asset_path(user_id: asset.user.slug, id: asset.id, format: :js), 'checked-message': t('.nsfw_feedback'), 'unchecked-message': t('.sfw_feedback') }}
+            %input.filled-in{type: "checkbox", id: "asset-nsfw-#{asset.id}", checked: asset.is_adult_content?}
+            %label{for: "asset-nsfw-#{asset.id}"}= t(".is_adult_content")
+
+%div{id: "edit-asset-modal-#{asset.id}", class: 'modal'}
+  = form_for([asset.user, asset.becomes(Asset)], html: { remote: true, class: 'edit-asset-modal', data: { success: t("users.assets.update.success") }} ) do |f|
+    = render partial: "users/assets/form", locals: { f: f }
+
+= form_for [asset.user, asset.becomes(Asset)], method: :put do |f|
+  .modal.set-gravity-modal{id: "set-gravity-modal-#{asset.id}"}
+    .modal-content
+      = f.hidden_field :gravity_x, value: asset.gravity_x
+      = f.hidden_field :gravity_y, value: asset.gravity_y
+      = f.hidden_field :gravity, value: asset.gravity
+
+      .row.row-no-bottom-margin
+        .col.s12.l6.flow-text
+          <strong>Please click on the most important part of your asset.</strong> This way we can make sure to always display it right on any device and screen.
+        .col.s12.l6.right-align
+          .gravity-container
+            .gravity-hint
+            = image_tag asset.file_url(:original)
+    .modal-footer.flex-align
+      = link_to t('.cancel_gravity'), "#!", type: :submit, class: 'btn-flat modal-close'
+      = f.button t('.save_gravity'), type: :submit, class: 'btn-flat modal-action waves-effect'

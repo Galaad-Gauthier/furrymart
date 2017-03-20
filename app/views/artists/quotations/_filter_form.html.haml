@@ -1,0 +1,3 @@
+= link_to t("quotations.states.all"), artist_quotations_path(artist_id: @artist.slug), class: "btn-flat blue-text ellipsis #{is_active_link?(artist_quotations_path(artist_id: @artist.slug), :exact) && 'active'}"
+- Quotation.aasm.states.map(&:name).reject { |state| state == :draft }.each do |state|
+  = link_to t("quotations.states.#{state}"), artist_quotations_path(artist_id: @artist.slug, state: state), class: "btn-flat blue-text ellipsis #{artist_quotation_count_by_state(@artist, state).zero? && "disabled"} #{is_active_link?(artist_quotations_path(artist_id: @artist.slug, state: state), :exact) && 'active'}"

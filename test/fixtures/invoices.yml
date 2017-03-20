@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  price: 20
+  currency_uid: USD
+  invoice_reference: INV-1
+  invoicing_informations: Invoicing informations
+  additional_informations: Additional informations
+  vat_number: 123
+  quotation: one
+
+other:
+  price: 20
+  currency_uid: USD
+  invoice_reference: INV-1
+  invoicing_informations: Invoicing informations
+  additional_informations: Additional informations
+  vat_number: 123
+  quotation: other

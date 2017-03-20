@@ -1,0 +1,15 @@
+.mui--text-body1
+  - if @quotation.proposal.present?
+    = raw t('.body', {                                                             |
+          proposal_title: h(@quotation.proposal.title),                            |
+          artist_link: h(profile_url(user_id: @quotation.artist.slug)),   |
+          artist_name: h(@quotation.artist.name)                                   |
+      })                                                                           |
+    %br/
+
+.mui--text-body1
+  = raw t('.infos')
+
+%br/
+.mui--text-center.mui-link
+  %a.mui-btn.mui-btn--primary{:href => "#{quotation_url(@quotation)}", :target => "_blank"}= t('.show_quotation')

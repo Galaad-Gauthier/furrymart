@@ -1,0 +1,27 @@
+// Place all the styles related to the assets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+label[for='new_assets'] .btn {
+  font-size: 15px;
+}
+
+.wide-banner {
+  .assets-preloader {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.fixed-action-btn {
+  .assets-preloader {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      top: 13px;
+      left: -2px;
+  }
+}
+#new_assets {
+  display: none;
+}

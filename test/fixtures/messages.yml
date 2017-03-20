@@ -1,0 +1,33 @@
+# == Schema Information
+#
+# Table name: messages
+#
+#  body         :text
+#  created_at   :datetime         not null
+#  id           :integer          not null, primary key
+#  read         :boolean          default(FALSE)
+#  recipient_id :integer
+#  sender_id    :integer
+#  updated_at   :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+to_artist:
+  sender: commissioner
+  recipient: artist
+  body: test 1
+
+to_commissioner:
+  sender: artist
+  recipient: commissioner
+  body: test 2
+
+artist_to_commissioner:
+  sender: artist
+  recipient: other
+  body: test 3
