@@ -37,7 +37,7 @@ AdminUser.create(email: "admin@example.com", password: "password")
 
 ## Configuration
 
-FurryMart use the *firago* gem to handle configuration by using environment variables.
+FurryMart use the *figaro* gem to handle configuration by using environment variables. Set your environments variables in `config/application.yml`.
 
 ```
 production:
