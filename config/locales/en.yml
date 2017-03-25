@@ -105,7 +105,7 @@ en:
         other: '%{count} new notifications'
     no_image:
       no_assets: You don't have any illustration pictures
-      go_to_assets: You can add them on your <a href="/pictures" target="_blank">interface</a>.
+      go_to_assets: You can add them later in your <a href="%{assets_path}" target="_blank">gallery</a>.
     illustration:
       no_description: No description
     illustration_picker:
