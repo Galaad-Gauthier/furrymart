@@ -9,7 +9,7 @@ class NotificationsController < ApplicationController
 
     authorize @activities
 
-    PublicActivity::Activity.mark_as_read!(PublicActivity::Activity.where(trackable_type: "News").to_a, for: current_user) if current_user
+    PublicActivity::Activity.mark_as_read!(PublicActivity::Activity.where(trackable_type: "News", recipient: current_user).to_a, for: current_user) if current_user
   end
 
   def mark_all_as_read
