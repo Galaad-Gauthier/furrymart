@@ -30,6 +30,8 @@ class Profile < ApplicationRecord
     inkbunny
     weasyl
     sofurry
+    furrynetwork
+    commissio
     twitter
     deviantart
     patreon
@@ -79,6 +81,8 @@ class Profile < ApplicationRecord
     regexps = {
       "furaffinity" => /furaffinity\.net\/user\/([\w|\-|\_|\&]*)/,
       "inkbunny" => /inkbunny\.net\/([\w|\-|\_|\&]*)/,
+      "commissio" => /commiss\.io\/([\w|\-|\_|\&]*)/,
+      "furrynetwork" => /furrynetwork\.com\/([\w|\-|\_|\&]*)/,
       "sofurry" => /([\w|\-|\_|\&]*)\.sofurry\.com/,
       "weasyl" => /weasyl\.com\/\~([\w|\-|\_|\&]*)/,
       "twitter" => /twitter\.com\/([\w|\-|\_|\&]*)/,
