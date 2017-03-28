@@ -46,6 +46,7 @@ class Profile < ApplicationRecord
     twitter
     deviantart
     patreon
+    commissio
   )
 
 ### Associations ###

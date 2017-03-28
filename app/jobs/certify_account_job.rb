@@ -14,6 +14,9 @@ class CertifyAccountJob < ApplicationJob
     "weasyl" => [
       '#user-profile'
     ],
+    "commissio" => [
+      '.profile-info'
+    ],
     "deviantart" => [
       '#aboutme-info'
     ],
