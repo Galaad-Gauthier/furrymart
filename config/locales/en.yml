@@ -60,6 +60,8 @@ en:
     inkbunny: Inkbunny
     weasyl: Weasyl
     sofurry: SoFurry
+    furrynetwork: FurryNetwork
+    commissio: Commiss.io
     twitter: Twitter
     tumblr: Tumblr
     deviantart: DeviantArt
@@ -69,12 +71,17 @@ en:
       inkbunny: 'Your Inkbunny username'
       weasyl: 'Your Weasyl username'
       sofurry: 'Your SoFurry username'
+      furrynetwork: 'Your FurryNetwork profile name'
+      commissio: 'Your Commiss.io username'
       twitter: 'Your Twitter username'
       tumblr: 'Your Tumblr username'
       deviantart: 'Your DeviantArt username'
       patreon: 'Your Patreon id number'
     url:
       furaffinity: "https://furaffinity.net/user/%{username}"
+      inkbunny: "https://inkbunny.net/%{username}"
+      furrynetwork: "https://beta.furrynetwork.com/%{username}/"
+      commissio: "https://commiss.io/%{username}/"
       inkbunny: "https://inkbunny.net/%{username}"
       weasyl: "https://www.weasyl.com/~%{username}"
       sofurry: "https://%{username}.sofurry.com"
