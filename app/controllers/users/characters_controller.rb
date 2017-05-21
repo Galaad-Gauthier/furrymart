@@ -35,7 +35,7 @@ class Users::CharactersController < ApplicationController
     if @character.save
       flash[:notice] = I18n.t("users.characters.update.success", { character_name: @character.name })
 
-      redirect_to profile_path(user_id: current_user.slug)
+      redirect_to character_path(id: @character.slug)
     else
       render 'edit'
     end
