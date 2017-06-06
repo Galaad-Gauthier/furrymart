@@ -6,9 +6,6 @@
     - if !user_signed_in?
       = render partial: "notices/welcome"
 
-    - if Rails.env.playground?
-      = render partial: "notices/playground"
-
     - if @proposals.empty?
       .col.s12.page-notice
         .card.notice-card

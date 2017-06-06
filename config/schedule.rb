@@ -10,6 +10,3 @@ every '30 8 * * 1', roles: [:production] do
   rake "quotations:remind_waiting_approval"
 end
 
-every 1.day, roles: [:playground] do
-  rake "db:seed"
-end
